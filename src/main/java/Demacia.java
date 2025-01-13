@@ -15,6 +15,7 @@ public class Demacia {
         this.terminal.printHorizontal();
         this.terminal.output("Buybye, see ya later...");
         this.terminal.printHorizontal();
+        System.exit(0);
     }
 
     public static void main(String[] args) {
