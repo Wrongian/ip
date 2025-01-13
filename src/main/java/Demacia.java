@@ -9,6 +9,24 @@ public class Demacia {
         this.terminal.printHorizontal();
         this.terminal.output("Hello I am Demacia, a chatbot");
         this.terminal.output("Type what you desire");
+        this.terminal.printHorizontal();
+    }
+
+    public void start() {
+        // get messages from user
+        while (true) {
+            String msg = this.terminal.input();
+            switch (msg) {
+                case "bye":
+                    this.exit();
+                default:
+                    // echo by default for now
+                    this.terminal.printHorizontal();
+                    this.terminal.output(msg);
+                    this.terminal.printHorizontal();
+            }
+        }
+
     }
 
     public void exit() {
@@ -21,6 +39,6 @@ public class Demacia {
     public static void main(String[] args) {
         Demacia bot = new Demacia();
         bot.greet();
-        bot.exit();
+        bot.start();
     }
 }
