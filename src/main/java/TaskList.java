@@ -10,18 +10,35 @@ public class TaskList {
     }
 
     public void addTask(String name) {
+        // todo: check to see if exceeds max number of tasks
         Task newTask = new Task(name);
         // modify task array
         this.tasks[taskIndex] = newTask;
         this.taskIndex += 1;
     }
 
+    public void markTask(int index) {
+        // todo: check to see if index in the range
+        this.tasks[index].markDone();
+    }
+
+    public void unmarkTask(int index) {
+        // todo: check to see if index in the range
+        this.tasks[index].unmarkDone();
+    }
+
+    public String getTaskString(int index) {
+        // todo: check to see if index in the range
+        return this.tasks[index].toString();
+    }
+
     public String listTasks() {
         StringBuilder msg = new StringBuilder();
         for (int i = 0; i < this.taskIndex; i++) {
+            Task curTask = this.tasks[i];
             msg.append(String.valueOf(i + 1));
-            msg.append(". ");
-            msg.append(this.tasks[i].getName());
+            msg.append(".");
+            msg.append(curTask.toString());
             msg.append("\n");
         }
         // delete last newline

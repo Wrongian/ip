@@ -23,6 +23,24 @@ public class Demacia {
         this.terminal.printHorizontal();
     }
 
+    public void markTask(int index) {
+        // get task
+        this.terminal.printHorizontal();
+        this.taskList.markTask(index);
+        this.terminal.output("Marked this task as done: ");
+        this.terminal.output(this.taskList.getTaskString(index));
+        this.terminal.printHorizontal();
+    }
+
+    public void unmarkTask(int index) {
+        // get task
+        this.terminal.printHorizontal();
+        this.taskList.unmarkTask(index);
+        this.terminal.output("Marked this task as not done yet: ");
+        this.terminal.output(this.taskList.getTaskString(index));
+        this.terminal.printHorizontal();
+    }
+
     public void greet() {
         this.terminal.printHorizontal();
         this.terminal.output("Hello I am Demacia, a chatbot");
@@ -32,14 +50,27 @@ public class Demacia {
 
     public void start() {
         // get messages from user
+        // todo: enums for the commands
+        // todo: higher order function so that dont have to add horizontal lines to everything
         while (true) {
             String msg = this.terminal.input();
-            switch (msg) {
+            String[] cmds = msg.split(" ");
+//            this.terminal.output(cmds[0]);
+            // todo: checking and sanitize commands array
+            switch (cmds[0]) {
                 case "bye":
                     this.exit();
                     break;
                 case "list":
                     this.listTasks();
+                    break;
+                case "mark":
+                    // todo: check if integer and check correct number of arguments
+                    this.markTask(Integer.parseInt(cmds[1]) - 1);
+                    break;
+                case "unmark":
+                    // todo: check if integer and check correct number of arguments
+                    this.unmarkTask(Integer.parseInt(cmds[1]) - 1);
                     break;
                 default:
                     addTask(msg);
