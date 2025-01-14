@@ -9,12 +9,32 @@ public class TaskList {
         this.taskIndex = 0;
     }
 
-    public void addTask(String name) {
-        // todo: check to see if exceeds max number of tasks
-        Task newTask = new Task(name);
+    public void addToList(Task task) {
         // modify task array
-        this.tasks[taskIndex] = newTask;
+        this.tasks[taskIndex] = task;
         this.taskIndex += 1;
+    }
+
+
+    public int addTodo(String name) {
+        // todo: check to see if exceeds max number of tasks
+        Todo newTodo = new Todo(name);
+        addToList(newTodo);
+        return this.taskIndex - 1;
+    }
+
+    public int addDeadline(String name, String by) {
+        // todo: check to see if exceeds max number of tasks
+        Deadline newDeadline = new Deadline(name, by);
+        addToList(newDeadline);
+        return this.taskIndex - 1;
+    }
+
+    public int addEvent(String name, String from, String to) {
+        // todo: check to see if exceeds max number of tasks
+        Event newEvent = new Event(name, from, to);
+        addToList(newEvent);
+        return this.taskIndex - 1;
     }
 
     public void markTask(int index) {

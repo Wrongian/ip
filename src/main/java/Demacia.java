@@ -7,12 +7,33 @@ public class Demacia {
         this.taskList = new TaskList();
    }
 
-    public void addTask(String task) {
-        // msg
+    private void addTodo(String task) {
         this.terminal.printHorizontal();
-        taskList.addTask(task);
-        String msg = "added: " + task;
+        int index = taskList.addTodo(task);
+        String msg = "Got it. I have added this task: \n" +
+                taskList.getTaskString(index);
         this.terminal.output(msg);
+        this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+        this.terminal.printHorizontal();
+    }
+
+    private void addDeadline(String task, String by) {
+        this.terminal.printHorizontal();
+        int index = taskList.addDeadline(task, by);
+        String msg = "Got it. I have added this task: \n" +
+                taskList.getTaskString(index);
+        this.terminal.output(msg);
+        this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+        this.terminal.printHorizontal();
+    }
+
+    private void addEvent(String task, String from, String to) {
+        this.terminal.printHorizontal();
+        int index = taskList.addEvent(task, from, to);
+        String msg = "Got it. I have added this task: \n" +
+                taskList.getTaskString(index);
+        this.terminal.output(msg);
+        this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
         this.terminal.printHorizontal();
     }
 
@@ -23,7 +44,7 @@ public class Demacia {
         this.terminal.printHorizontal();
     }
 
-    public void markTask(int index) {
+    private void markTask(int index) {
         // get task
         this.terminal.printHorizontal();
         this.taskList.markTask(index);
@@ -32,7 +53,7 @@ public class Demacia {
         this.terminal.printHorizontal();
     }
 
-    public void unmarkTask(int index) {
+    private void unmarkTask(int index) {
         // get task
         this.terminal.printHorizontal();
         this.taskList.unmarkTask(index);
@@ -55,31 +76,71 @@ public class Demacia {
         while (true) {
             String msg = this.terminal.input();
             String[] cmds = msg.split(" ");
-//            this.terminal.output(cmds[0]);
+            String name;
             // todo: checking and sanitize commands array
             switch (cmds[0]) {
-                case "bye":
-                    this.exit();
-                    break;
-                case "list":
-                    this.listTasks();
-                    break;
-                case "mark":
-                    // todo: check if integer and check correct number of arguments
-                    this.markTask(Integer.parseInt(cmds[1]) - 1);
-                    break;
-                case "unmark":
-                    // todo: check if integer and check correct number of arguments
-                    this.unmarkTask(Integer.parseInt(cmds[1]) - 1);
-                    break;
-                default:
-                    addTask(msg);
-                    break;
+            case "bye":
+                this.exit();
+                break;
+            case "list":
+                this.listTasks();
+                break;
+            case "mark":
+                // todo: check if integer and check correct number of arguments
+                this.markTask(Integer.parseInt(cmds[1]) - 1);
+                break;
+            case "unmark":
+                // todo: check if integer and check correct number of arguments
+                this.unmarkTask(Integer.parseInt(cmds[1]) - 1);
+                break;
+            case "todo":
+                // todo: check arguments
+                this.addTodo(Utils.joinStringArray(cmds,1));
+                break;
+            case "deadline":
+                // todo: check arguments
+                // find "by"
+                int by_index = 0;
+                for (int i = 1; i < cmds.length; i++) {
+                    if (cmds[i].equals("/by")) {
+                        by_index = i;
+                        break;
+                    }
+                }
+                name = Utils.joinStringArray(cmds,1, by_index - 1);
+                String by = Utils.joinStringArray(cmds, by_index + 1);
+                this.addDeadline(name, by);
+                break;
+            case "event":
+                // todo: check arguments
+                // find "from"
+                int from_index = 0;
+                for (int i = 1; i < cmds.length; i++) {
+                    if (cmds[i].equals("/from")) {
+                        from_index = i;
+                        break;
+                    }
+                }
+                // find to
+                int to_index = 0;
+                for (int i = 1; i < cmds.length; i++) {
+                    if (cmds[i].equals("/to")) {
+                        to_index = i;
+                        break;
+                    }
+                }
+                name = Utils.joinStringArray(cmds,1, from_index - 1);
+                String from = Utils.joinStringArray(cmds,from_index + 1, to_index - 1);
+                String to = Utils.joinStringArray(cmds, to_index + 1);
+                this.addEvent(name, from, to);
+                break;
+            default:
+                break;
             }
         }
     }
 
-    public void exit() {
+    private void exit() {
         this.terminal.printHorizontal();
         this.terminal.output("Buybye, see ya later...");
         this.terminal.printHorizontal();
