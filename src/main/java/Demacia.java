@@ -1,25 +1,16 @@
-import java.lang.StringBuilder;
 public class Demacia {
-
-    private static final int MAX_TASKS = 100;
-
     private final Terminal terminal;
-    private String[] tasks;
-    private int taskIndex;
+    private final TaskList taskList;
 
     public Demacia() {
         this.terminal = new Terminal();
-        this.tasks = new String[Demacia.MAX_TASKS];
-        this.taskIndex = 0;
-    }
+        this.taskList = new TaskList();
+   }
 
     public void addTask(String task) {
-        // modify task array
-        this.tasks[taskIndex] = task;
-        this.taskIndex += 1;
-
         // msg
         this.terminal.printHorizontal();
+        taskList.addTask(task);
         String msg = "added: " + task;
         this.terminal.output(msg);
         this.terminal.printHorizontal();
@@ -27,16 +18,8 @@ public class Demacia {
 
     public void listTasks() {
         this.terminal.printHorizontal();
-        StringBuilder msg = new StringBuilder();
-        for (int i = 0; i < this.taskIndex; i++) {
-            msg.append(String.valueOf(i + 1));
-            msg.append(". ");
-            msg.append(this.tasks[i]);
-            msg.append("\n");
-        }
-        // delete last newline
-        msg.deleteCharAt(msg.length() - 1);
-        this.terminal.output(msg.toString());
+        String msg = this.taskList.listTasks();
+        this.terminal.output(msg);
         this.terminal.printHorizontal();
     }
 
@@ -63,7 +46,6 @@ public class Demacia {
                     break;
             }
         }
-
     }
 
     public void exit() {
