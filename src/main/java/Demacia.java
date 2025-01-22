@@ -10,7 +10,7 @@ public class Demacia {
     private void addTodo(String task) {
         this.terminal.printHorizontal();
         int index = taskList.addTodo(task);
-        String msg = "Got it. I have added this task: \n" +
+        String msg = "Got it. I have added this task:\n" +
                 taskList.getTaskString(index);
         this.terminal.output(msg);
         this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
@@ -20,7 +20,7 @@ public class Demacia {
     private void addDeadline(String task, String by) {
         this.terminal.printHorizontal();
         int index = taskList.addDeadline(task, by);
-        String msg = "Got it. I have added this task: \n" +
+        String msg = "Got it. I have added this task:\n" +
                 taskList.getTaskString(index);
         this.terminal.output(msg);
         this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
@@ -30,7 +30,7 @@ public class Demacia {
     private void addEvent(String task, String from, String to) {
         this.terminal.printHorizontal();
         int index = taskList.addEvent(task, from, to);
-        String msg = "Got it. I have added this task: \n" +
+        String msg = "Got it. I have added this task:\n" +
                 taskList.getTaskString(index);
         this.terminal.output(msg);
         this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
@@ -48,7 +48,7 @@ public class Demacia {
         // get task
         this.terminal.printHorizontal();
         this.taskList.markTask(index);
-        this.terminal.output("Marked this task as done: ");
+        this.terminal.output("Marked this task as done:");
         this.terminal.output(this.taskList.getTaskString(index));
         this.terminal.printHorizontal();
     }
@@ -57,7 +57,7 @@ public class Demacia {
         // get task
         this.terminal.printHorizontal();
         this.taskList.unmarkTask(index);
-        this.terminal.output("Marked this task as not done yet: ");
+        this.terminal.output("Marked this task as not done yet:");
         this.terminal.output(this.taskList.getTaskString(index));
         this.terminal.printHorizontal();
     }
