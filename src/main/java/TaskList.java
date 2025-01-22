@@ -16,39 +16,51 @@ public class TaskList {
     }
 
 
-    public int addTodo(String name) {
-        // todo: check to see if exceeds max number of tasks
+    public int addTodo(String name) throws ArrayIndexOutOfBoundsException {
+        if (taskIndex + 1 >= TaskList.MAX_TASKS) {
+            throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
+        }
         Todo newTodo = new Todo(name);
         addToList(newTodo);
         return this.taskIndex - 1;
     }
 
-    public int addDeadline(String name, String by) {
-        // todo: check to see if exceeds max number of tasks
+    public int addDeadline(String name, String by) throws IndexOutOfBoundsException {
+        if (taskIndex + 1 >= TaskList.MAX_TASKS) {
+            throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
+        }
         Deadline newDeadline = new Deadline(name, by);
         addToList(newDeadline);
         return this.taskIndex - 1;
     }
 
-    public int addEvent(String name, String from, String to) {
-        // todo: check to see if exceeds max number of tasks
+    public int addEvent(String name, String from, String to) throws IndexOutOfBoundsException {
+        if (taskIndex + 1 >= TaskList.MAX_TASKS) {
+            throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
+        }
         Event newEvent = new Event(name, from, to);
         addToList(newEvent);
         return this.taskIndex - 1;
     }
 
-    public void markTask(int index) {
-        // todo: check to see if index in the range
+    public void markTask(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
+            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+        }
         this.tasks[index].markDone();
     }
 
-    public void unmarkTask(int index) {
-        // todo: check to see if index in the range
+    public void unmarkTask(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
+            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+        }
         this.tasks[index].unmarkDone();
     }
 
-    public String getTaskString(int index) {
-        // todo: check to see if index in the range
+    public String getTaskString(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
+            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+        }
         return this.tasks[index].toString();
     }
 
