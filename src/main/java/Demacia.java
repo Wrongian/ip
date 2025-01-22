@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Demacia {
     private final Terminal terminal;
     private final TaskList taskList;
@@ -9,31 +11,43 @@ public class Demacia {
 
     private void addTodo(String task) {
         this.terminal.printHorizontal();
-        int index = taskList.addTodo(task);
-        String msg = "Got it. I have added this task:\n" +
-                taskList.getTaskString(index);
-        this.terminal.output(msg);
-        this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+        try {
+            int index = taskList.addTodo(task);
+            String msg = "Got it. I have added this task:\n" +
+                    taskList.getTaskString(index);
+            this.terminal.output(msg);
+            this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+        } catch (IndexOutOfBoundsException e) {
+            terminal.output(e.getMessage());
+        }
         this.terminal.printHorizontal();
     }
 
     private void addDeadline(String task, String by) {
         this.terminal.printHorizontal();
-        int index = taskList.addDeadline(task, by);
-        String msg = "Got it. I have added this task:\n" +
-                taskList.getTaskString(index);
-        this.terminal.output(msg);
-        this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+        try {
+            int index = taskList.addDeadline(task, by);
+            String msg = "Got it. I have added this task:\n" +
+                    taskList.getTaskString(index);
+            this.terminal.output(msg);
+            this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+        } catch (IndexOutOfBoundsException e) {
+            terminal.output(e.getMessage());
+        }
         this.terminal.printHorizontal();
     }
 
     private void addEvent(String task, String from, String to) {
         this.terminal.printHorizontal();
-        int index = taskList.addEvent(task, from, to);
-        String msg = "Got it. I have added this task:\n" +
-                taskList.getTaskString(index);
-        this.terminal.output(msg);
-        this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+        try {
+            int index = taskList.addEvent(task, from, to);
+            String msg = "Got it. I have added this task:\n" +
+                    taskList.getTaskString(index);
+            this.terminal.output(msg);
+            this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+        } catch (IndexOutOfBoundsException e) {
+            terminal.output(e.getMessage());
+        }
         this.terminal.printHorizontal();
     }
 
@@ -47,18 +61,26 @@ public class Demacia {
     private void markTask(int index) {
         // get task
         this.terminal.printHorizontal();
-        this.taskList.markTask(index);
-        this.terminal.output("Marked this task as done:");
-        this.terminal.output(this.taskList.getTaskString(index));
+        try {
+            this.taskList.markTask(index);
+            this.terminal.output("Marked this task as done:");
+            this.terminal.output(this.taskList.getTaskString(index));
+        } catch (IndexOutOfBoundsException e) {
+            this.terminal.output(e.getMessage());
+        }
         this.terminal.printHorizontal();
     }
 
     private void unmarkTask(int index) {
         // get task
         this.terminal.printHorizontal();
-        this.taskList.unmarkTask(index);
-        this.terminal.output("Marked this task as not done yet:");
-        this.terminal.output(this.taskList.getTaskString(index));
+        try {
+            this.taskList.unmarkTask(index);
+            this.terminal.output("Marked this task as not done yet:");
+            this.terminal.output(this.taskList.getTaskString(index));
+        } catch (IndexOutOfBoundsException e) {
+            this.terminal.output(e.getMessage());
+        }
         this.terminal.printHorizontal();
     }
 
@@ -75,10 +97,45 @@ public class Demacia {
         // todo: higher order function so that dont have to add horizontal lines to everything
         while (true) {
             String msg = this.terminal.input();
-            String[] cmds = msg.split(" ");
-            String name;
+
+            // hashmap rest of the arguments
+            String[] args = msg.split(" /");
+            HashMap<String, String> cmds = new HashMap<String, String>();
+            if (args.length > 1) {
+                for (int i = 1; i < args.length; i++) {
+                    String[] argArr = args[i].split(" ");
+                    StringBuilder argsBuilder = new StringBuilder();
+                    for (int j = 1; j < argArr.length; j++) {
+                        argsBuilder.append(argArr[j]);
+                        argsBuilder.append(" ");
+                    }
+                    if (!argsBuilder.isEmpty()) {
+                       argsBuilder.deleteCharAt(argsBuilder.length() - 1);
+                    }
+                    cmds.put(argArr[0], argsBuilder.toString());
+                }
+            }
+
+            // build base args
+            String[] base_cmd = args[0].split(" ");
+            String first_arg = "";
+            String cmd = "";
+            if (base_cmd.length == 1) {
+                cmd = base_cmd[0];
+            } else if (base_cmd.length > 1) {
+                StringBuilder nameBuilder = new StringBuilder();
+                for (int i = 1; i < base_cmd.length; i++) {
+                    nameBuilder.append(base_cmd[i]);
+                    nameBuilder.append(" ");
+                }
+                if (!nameBuilder.isEmpty()) {
+                    nameBuilder.deleteCharAt(nameBuilder.length() - 1);
+                }
+                first_arg = nameBuilder.toString();
+                cmd = base_cmd[0];
+            }
             // todo: checking and sanitize commands array
-            switch (cmds[0]) {
+            switch (cmd) {
             case "bye":
                 this.exit();
                 break;
@@ -87,54 +144,26 @@ public class Demacia {
                 break;
             case "mark":
                 // todo: check if integer and check correct number of arguments
-                this.markTask(Integer.parseInt(cmds[1]) - 1);
+                this.markTask(Integer.parseInt(first_arg) - 1);
                 break;
             case "unmark":
                 // todo: check if integer and check correct number of arguments
-                this.unmarkTask(Integer.parseInt(cmds[1]) - 1);
+                this.unmarkTask(Integer.parseInt(first_arg) - 1);
                 break;
             case "todo":
                 // todo: check arguments
-                this.addTodo(Utils.joinStringArray(cmds,1));
+                this.addTodo(first_arg);
                 break;
             case "deadline":
                 // todo: check arguments
-                // find "by"
-                int by_index = 0;
-                for (int i = 1; i < cmds.length; i++) {
-                    if (cmds[i].equals("/by")) {
-                        by_index = i;
-                        break;
-                    }
-                }
-                name = Utils.joinStringArray(cmds,1, by_index - 1);
-                String by = Utils.joinStringArray(cmds, by_index + 1);
-                this.addDeadline(name, by);
+                this.addDeadline(first_arg, cmds.get("by"));
                 break;
             case "event":
                 // todo: check arguments
-                // find "from"
-                int from_index = 0;
-                for (int i = 1; i < cmds.length; i++) {
-                    if (cmds[i].equals("/from")) {
-                        from_index = i;
-                        break;
-                    }
-                }
-                // find to
-                int to_index = 0;
-                for (int i = 1; i < cmds.length; i++) {
-                    if (cmds[i].equals("/to")) {
-                        to_index = i;
-                        break;
-                    }
-                }
-                name = Utils.joinStringArray(cmds,1, from_index - 1);
-                String from = Utils.joinStringArray(cmds,from_index + 1, to_index - 1);
-                String to = Utils.joinStringArray(cmds, to_index + 1);
-                this.addEvent(name, from, to);
+                this.addEvent(first_arg, cmds.get("from"), cmds.get("to"));
                 break;
             default:
+                // todo: invalid command throw error
                 break;
             }
         }
