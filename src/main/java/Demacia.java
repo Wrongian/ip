@@ -140,49 +140,55 @@ public class Demacia {
                 switch (cmd) {
                     case "bye":
                         if (!first_arg.isEmpty() || args.length > 1) {
-                            throw new IncorrectArgumentFormatException();
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \nbye");
                         }
                         this.exit();
                         break;
                     case "list":
                         if (!first_arg.isEmpty() || args.length > 1) {
-                            throw new IncorrectArgumentFormatException();
+                            throw new IncorrectArgumentFormatException("Usage: \nlist");
                         }
                         this.listTasks();
                         break;
                     case "mark":
                         if (first_arg.isEmpty() || args.length > 1) {
-                            throw new IncorrectArgumentFormatException();
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \nmark <task number>");
                         }
                         this.markTask(Integer.parseInt(first_arg) - 1);
                         break;
                     case "unmark":
                         if (first_arg.isEmpty() || args.length > 1) {
-                            throw new IncorrectArgumentFormatException();
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \nunmark <task number>");
                         }
                         this.unmarkTask(Integer.parseInt(first_arg) - 1);
                         break;
                     case "todo":
                         if (first_arg.isEmpty() || args.length > 1) {
-                            throw new IncorrectArgumentFormatException();
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \ntodo <task name>");
                         }
                         this.addTodo(first_arg);
                         break;
                     case "deadline":
                         if (first_arg.isEmpty() || args.length != 2 || !cmds.containsKey("by")) {
-                            throw new IncorrectArgumentFormatException();
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \ntodo <task name> /by <deadline>");
                         }
                         this.addDeadline(first_arg, cmds.get("by"));
                         break;
                     case "event":
                         if (first_arg.isEmpty() || args.length != 3 ||
                                 !cmds.containsKey("from") || !cmds.containsKey("to")) {
-                            throw new IncorrectArgumentFormatException();
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \ntodo <task name> /from <from> /to <to>");
                         }
                         this.addEvent(first_arg, cmds.get("from"), cmds.get("to"));
                         break;
                     default:
-                        throw new IncorrectArgumentFormatException();
+                        throw new IncorrectArgumentFormatException("Command does not exist");
                 }
             } catch (IncorrectArgumentFormatException e) {
                 terminal.output(e.getMessage());

@@ -3,10 +3,10 @@ package exceptions;
 public class IncorrectArgumentFormatException extends DukeException{
 
     public IncorrectArgumentFormatException() {
-        this("Incorrect Argument Format");
+        super("Incorrect Argument Format");
     }
 
     public IncorrectArgumentFormatException(String msg) {
-        super(msg);
+        super("Incorrect Argument Format: \n" + msg);
     }
 }
