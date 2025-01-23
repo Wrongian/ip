@@ -170,6 +170,12 @@ public class Demacia {
                             throw new IncorrectArgumentFormatException(
                                     "Usage: \nmark <task number>");
                         }
+                        // check if int
+                        if (!Utils.stringIsInt(first_arg)) {
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \nmark <task number>");
+                        }
+
                         this.markTask(Integer.parseInt(first_arg) - 1);
                         break;
                     case "unmark":
@@ -177,12 +183,22 @@ public class Demacia {
                             throw new IncorrectArgumentFormatException(
                                     "Usage: \nunmark <task number>");
                         }
+                        // check if int
+                        if (!Utils.stringIsInt(first_arg)) {
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \nmark <task number>");
+                        }
                         this.unmarkTask(Integer.parseInt(first_arg) - 1);
                         break;
                     case "delete":
                         if (first_arg.isEmpty() || args.length > 1) {
                             throw new IncorrectArgumentFormatException(
                                     "Usage: \ndelete <task number>");
+                        }
+                        // check if int
+                        if (!Utils.stringIsInt(first_arg)) {
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \nmark <task number>");
                         }
 
                         this.deleteTask(Integer.parseInt(first_arg) - 1);
