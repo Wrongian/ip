@@ -1,17 +1,19 @@
 import java.lang.StringBuilder;
+import java.util.ArrayList;
+
 public class TaskList {
     private static final int MAX_TASKS = 100;
-    private final Task[] tasks;
+    private final ArrayList<Task> tasks;
     private int taskIndex;
 
     public TaskList() {
-        this.tasks = new Task[TaskList.MAX_TASKS];
+        this.tasks = new ArrayList<Task>();
         this.taskIndex = 0;
     }
 
     public void addToList(Task task) {
         // modify task array
-        this.tasks[taskIndex] = task;
+        this.tasks.add(task);
         this.taskIndex += 1;
     }
 
@@ -47,21 +49,21 @@ public class TaskList {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
-        this.tasks[index].markDone();
+        this.tasks.get(index).markDone();
     }
 
     public void unmarkTask(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
-        this.tasks[index].unmarkDone();
+        this.tasks.get(index).unmarkDone();
     }
 
     public String getTaskString(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
-        return this.tasks[index].toString();
+        return this.tasks.get(index).toString();
     }
 
     public String listTasks() {
@@ -71,16 +73,18 @@ public class TaskList {
 
         StringBuilder msg = new StringBuilder();
         for (int i = 0; i < this.taskIndex; i++) {
-            Task curTask = this.tasks[i];
+            Task curTask = this.tasks.get(i);
             msg.append(String.valueOf(i + 1));
             msg.append(".");
             msg.append(curTask.toString());
             msg.append("\n");
         }
         // delete last newline
-        if (msg.length() > 0) {
+        if (!msg.isEmpty()) {
             msg.deleteCharAt(msg.length() - 1);
         }
         return msg.toString();
     }
+
+
 }
