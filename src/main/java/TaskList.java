@@ -65,6 +65,10 @@ public class TaskList {
     }
 
     public String listTasks() {
+        if (this.taskIndex == 0) {
+            return "List is empty";
+        }
+
         StringBuilder msg = new StringBuilder();
         for (int i = 0; i < this.taskIndex; i++) {
             Task curTask = this.tasks[i];
@@ -74,7 +78,9 @@ public class TaskList {
             msg.append("\n");
         }
         // delete last newline
-        msg.deleteCharAt(msg.length() - 1);
+        if (msg.length() > 0) {
+            msg.deleteCharAt(msg.length() - 1);
+        }
         return msg.toString();
     }
 }

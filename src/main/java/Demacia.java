@@ -1,3 +1,5 @@
+import exceptions.IncorrectArgumentFormatException;
+
 import java.util.HashMap;
 
 public class Demacia {
@@ -134,37 +136,56 @@ public class Demacia {
                 first_arg = nameBuilder.toString();
                 cmd = base_cmd[0];
             }
-            // todo: checking and sanitize commands array
-            switch (cmd) {
-            case "bye":
-                this.exit();
-                break;
-            case "list":
-                this.listTasks();
-                break;
-            case "mark":
-                // todo: check if integer and check correct number of arguments
-                this.markTask(Integer.parseInt(first_arg) - 1);
-                break;
-            case "unmark":
-                // todo: check if integer and check correct number of arguments
-                this.unmarkTask(Integer.parseInt(first_arg) - 1);
-                break;
-            case "todo":
-                // todo: check arguments
-                this.addTodo(first_arg);
-                break;
-            case "deadline":
-                // todo: check arguments
-                this.addDeadline(first_arg, cmds.get("by"));
-                break;
-            case "event":
-                // todo: check arguments
-                this.addEvent(first_arg, cmds.get("from"), cmds.get("to"));
-                break;
-            default:
-                // todo: invalid command throw error
-                break;
+            try {
+                switch (cmd) {
+                    case "bye":
+                        if (!first_arg.isEmpty() || args.length > 1) {
+                            throw new IncorrectArgumentFormatException();
+                        }
+                        this.exit();
+                        break;
+                    case "list":
+                        if (!first_arg.isEmpty() || args.length > 1) {
+                            throw new IncorrectArgumentFormatException();
+                        }
+                        this.listTasks();
+                        break;
+                    case "mark":
+                        if (first_arg.isEmpty() || args.length > 1) {
+                            throw new IncorrectArgumentFormatException();
+                        }
+                        this.markTask(Integer.parseInt(first_arg) - 1);
+                        break;
+                    case "unmark":
+                        if (first_arg.isEmpty() || args.length > 1) {
+                            throw new IncorrectArgumentFormatException();
+                        }
+                        this.unmarkTask(Integer.parseInt(first_arg) - 1);
+                        break;
+                    case "todo":
+                        if (first_arg.isEmpty() || args.length > 1) {
+                            throw new IncorrectArgumentFormatException();
+                        }
+                        this.addTodo(first_arg);
+                        break;
+                    case "deadline":
+                        if (first_arg.isEmpty() || args.length != 2 || !cmds.containsKey("by")) {
+                            throw new IncorrectArgumentFormatException();
+                        }
+                        this.addDeadline(first_arg, cmds.get("by"));
+                        break;
+                    case "event":
+                        if (first_arg.isEmpty() || args.length != 3 ||
+                                !cmds.containsKey("from") || !cmds.containsKey("to")) {
+                            throw new IncorrectArgumentFormatException();
+                        }
+                        this.addEvent(first_arg, cmds.get("from"), cmds.get("to"));
+                        break;
+                    default:
+                        throw new IncorrectArgumentFormatException();
+                }
+            } catch (IncorrectArgumentFormatException e) {
+                terminal.output(e.getMessage());
             }
         }
     }
