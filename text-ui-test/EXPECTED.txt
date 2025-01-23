@@ -81,5 +81,13 @@ Marked this task as not done yet:
 3.[E][ ] career fair (from: 30th june 9am to: 31st june 5pm)
 ------------------------------
 ------------------------------
+I have removed the task
+[E][ ] career fair (from: 30th june 9am to: 31st june 5pm)
+------------------------------
+------------------------------
+1.[T][ ] watch anime
+2.[D][ ] do homework (by: 24 june)
+------------------------------
+------------------------------
 Buybye, see ya later...
 ------------------------------

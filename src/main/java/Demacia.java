@@ -86,6 +86,20 @@ public class Demacia {
         this.terminal.printHorizontal();
     }
 
+    private void deleteTask(int index) {
+        // get task
+        this.terminal.printHorizontal();
+        try {
+            String taskString = this.taskList.getTaskString(index);
+            this.taskList.deleteTask(index);
+            this.terminal.output("I have removed the task");
+            this.terminal.output(taskString);
+        } catch (IndexOutOfBoundsException e) {
+            this.terminal.output(e.getMessage());
+        }
+        this.terminal.printHorizontal();
+    }
+
     public void greet() {
         this.terminal.printHorizontal();
         this.terminal.output("Hello I am Demacia, a chatbot");
@@ -164,6 +178,14 @@ public class Demacia {
                                     "Usage: \nunmark <task number>");
                         }
                         this.unmarkTask(Integer.parseInt(first_arg) - 1);
+                        break;
+                    case "delete":
+                        if (first_arg.isEmpty() || args.length > 1) {
+                            throw new IncorrectArgumentFormatException(
+                                    "Usage: \ndelete <task number>");
+                        }
+
+                        this.deleteTask(Integer.parseInt(first_arg) - 1);
                         break;
                     case "todo":
                         if (first_arg.isEmpty() || args.length > 1) {

@@ -17,7 +17,6 @@ public class TaskList {
         this.taskIndex += 1;
     }
 
-
     public int addTodo(String name) throws ArrayIndexOutOfBoundsException {
         if (taskIndex + 1 >= TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
@@ -86,5 +85,12 @@ public class TaskList {
         return msg.toString();
     }
 
+    public void deleteTask(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
+            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+        }
 
+        this.tasks.remove(index);
+        this.taskIndex -= 1;
+    }
 }
