@@ -2,8 +2,8 @@ public class SaveHandler {
 
     /*
         Format to save:
-        Double new line means new task.
-        New line means new key value pair
+        new line means new task.
+        , means new key value pair
         Key value pair format is <key>:<value>
     */
 
