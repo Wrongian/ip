@@ -4,11 +4,14 @@ import java.util.HashMap;
 
 public class Demacia {
     private final Terminal terminal;
-    private final TaskList taskList;
+    private TaskList taskList;
 
     public Demacia() {
         this.terminal = new Terminal();
         this.taskList = new TaskList();
+
+        SaveData saveData = SaveHandler.load();
+        this.taskList = saveData.getTaskList();
    }
 
     private void addTodo(String task) {
@@ -22,6 +25,7 @@ public class Demacia {
         } catch (IndexOutOfBoundsException e) {
             terminal.output(e.getMessage());
         }
+        this.save();
         this.terminal.printHorizontal();
     }
 
@@ -36,6 +40,7 @@ public class Demacia {
         } catch (IndexOutOfBoundsException e) {
             terminal.output(e.getMessage());
         }
+        this.save();
         this.terminal.printHorizontal();
     }
 
@@ -50,6 +55,7 @@ public class Demacia {
         } catch (IndexOutOfBoundsException e) {
             terminal.output(e.getMessage());
         }
+        this.save();
         this.terminal.printHorizontal();
     }
 
@@ -70,6 +76,7 @@ public class Demacia {
         } catch (IndexOutOfBoundsException e) {
             this.terminal.output(e.getMessage());
         }
+        this.save();
         this.terminal.printHorizontal();
     }
 
@@ -83,6 +90,7 @@ public class Demacia {
         } catch (IndexOutOfBoundsException e) {
             this.terminal.output(e.getMessage());
         }
+        this.save();
         this.terminal.printHorizontal();
     }
 
@@ -97,6 +105,7 @@ public class Demacia {
         } catch (IndexOutOfBoundsException e) {
             this.terminal.output(e.getMessage());
         }
+        this.save();
         this.terminal.printHorizontal();
     }
 
@@ -234,11 +243,16 @@ public class Demacia {
         }
     }
 
+
     private void exit() {
         this.terminal.printHorizontal();
         this.terminal.output("Buybye, see ya later...");
         this.terminal.printHorizontal();
         System.exit(0);
+    }
+
+    private void save() {
+        SaveHandler.save(new SaveData(this.taskList));
     }
 
     public static void main(String[] args) {

@@ -1,3 +1,6 @@
+Save cannot be loaded
+File not found
+Initialising to default values
 ------------------------------
 Hello I am Demacia, a chatbot
 Type what you desire

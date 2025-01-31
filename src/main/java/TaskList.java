@@ -1,7 +1,9 @@
+import exceptions.InvalidSaveException;
+
 import java.lang.StringBuilder;
 import java.util.ArrayList;
 
-public class TaskList {
+public class TaskList implements Saveable {
     private static final int MAX_TASKS = 100;
     private final ArrayList<Task> tasks;
     private int taskIndex;
@@ -92,5 +94,36 @@ public class TaskList {
 
         this.tasks.remove(index);
         this.taskIndex -= 1;
+    }
+
+    @Override
+    public String save() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < this.taskIndex; i++) {
+            Task curTask = this.tasks.get(i);
+            stringBuilder.append(curTask.save());
+            stringBuilder.append("\n");
+        }
+
+        if (!stringBuilder.isEmpty()) {
+            // delete last 2 chars
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public static TaskList load(String saveString) throws InvalidSaveException {
+        String[] taskStrings = saveString.split("\n");
+        TaskList taskList = new TaskList();
+        for (int i = 0; i < taskStrings.length; i++) {
+            Task newTask = Task.load(taskStrings[i]);
+            try {
+                taskList.addToList(newTask);
+            } catch (IndexOutOfBoundsException e) {
+                throw new InvalidSaveException("Too many tasks in the save file");
+            }
+        }
+        return taskList;
     }
 }

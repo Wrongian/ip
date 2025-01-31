@@ -1,5 +1,9 @@
+import exceptions.InvalidSaveException;
+
 import java.lang.StringBuilder;
-public class Task {
+import java.util.HashMap;
+
+public abstract class Task implements Saveable{
 
     private final String name;
     private boolean isDone;
@@ -7,6 +11,11 @@ public class Task {
     public Task(String name) {
         this.name = name;
         this.isDone = false;
+    }
+
+    public Task(String name, boolean isDone) {
+       this(name);
+       this.isDone = isDone;
     }
 
     public String getName() {
@@ -25,6 +34,10 @@ public class Task {
         return this.isDone;
     }
 
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
+    }
+
     @Override
     public String toString() {
         StringBuilder msg = new StringBuilder();
@@ -37,4 +50,67 @@ public class Task {
         return msg.toString();
     }
 
+    @Override
+    public String save() {
+        return "name:" + this.name + ",isMarked:" + this.getIsDone();
+    }
+
+    public static Task load(String saveString) throws InvalidSaveException{
+        String[] keyValueArray = saveString.split(",");
+        HashMap<String, String> saveMap = new HashMap<String, String>();
+        for (int i = 0; i < keyValueArray.length; i++) {
+            String[] keyValuePair = keyValueArray[i].split(":");
+            if (!(keyValuePair.length == 2)) {
+                throw new InvalidSaveException("Save file format is wrong");
+            }
+            saveMap.put(keyValuePair[0], keyValuePair[1]);
+        }
+        if (!saveMap.containsKey("type")) {
+            throw new InvalidSaveException("Key 'type' does not exist when it is required");
+        }
+
+        String type = saveMap.get("type");
+
+        // every task has a name
+        if (!saveMap.containsKey("name")) {
+            throw new InvalidSaveException("Key 'name' does not exist when it is required");
+        }
+
+        String name = saveMap.get("name");
+
+        // assume if the key "isMarked" not in the saveMap its false
+        boolean isMarked = false;
+        // default false if not true
+        if (saveMap.containsKey("isMarked")) {
+            if (saveMap.get("isMarked").equals("true")) {
+                isMarked = true;
+            }
+        }
+
+
+        switch (type) {
+        case "T":
+            return new Todo(name);
+        case "D":
+            if (!saveMap.containsKey("by")) {
+                throw new InvalidSaveException("Key 'by' does not exist when it is required");
+            }
+            String by = saveMap.get("by");
+            return new Deadline(name, by);
+        case "E":
+            if (!saveMap.containsKey("from")) {
+               throw new InvalidSaveException("Key 'from' does not exist when it is required");
+            }
+            if (!saveMap.containsKey("to")) {
+                throw new InvalidSaveException("Key 'from' does not exist when it is required");
+            }
+
+            String from = saveMap.get("from");
+            String to = saveMap.get("to");
+
+            return new Event(name, from, to);
+        }
+
+        throw new InvalidSaveException("Save file format is wrong");
+    }
 }

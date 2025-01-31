@@ -12,6 +12,18 @@ then
     rm ACTUAL.txt
 fi
 
+# delete save.txt if still exists
+if [ -e "data/save.txt" ]
+then
+    rm data/save.txt
+fi
+
+# delete data directory if still exists
+if [ -e "data" ]
+then
+    rmdir data
+fi
+
 # compile the code into the bin folder, terminates if error occurred
 if ! javac -cp ../src/main/java -Xlint:none -d ../out ../src/main/java/*.java
 then
