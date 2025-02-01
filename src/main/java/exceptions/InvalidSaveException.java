@@ -1,6 +1,6 @@
 package exceptions;
 
-public class InvalidSaveException extends Exception{
+public class InvalidSaveException extends DukeException {
 
     public InvalidSaveException(String msg) {
         super("Invalid save" + "\n" + msg);
