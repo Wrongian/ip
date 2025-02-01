@@ -1,6 +1,7 @@
 import exceptions.InvalidSaveException;
 
 import java.lang.StringBuilder;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TaskList implements Saveable {
@@ -28,7 +29,7 @@ public class TaskList implements Saveable {
         return this.taskIndex - 1;
     }
 
-    public int addDeadline(String name, String by) throws IndexOutOfBoundsException {
+    public int addDeadline(String name, LocalDateTime by) throws IndexOutOfBoundsException {
         if (taskIndex + 1 >= TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
         }
@@ -37,7 +38,7 @@ public class TaskList implements Saveable {
         return this.taskIndex - 1;
     }
 
-    public int addEvent(String name, String from, String to) throws IndexOutOfBoundsException {
+    public int addEvent(String name, LocalDateTime from, LocalDateTime to) throws IndexOutOfBoundsException {
         if (taskIndex + 1 >= TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
         }
