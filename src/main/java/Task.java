@@ -1,6 +1,9 @@
 import exceptions.InvalidSaveException;
 
 import java.lang.StringBuilder;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
 public abstract class Task implements Saveable{
@@ -87,7 +90,6 @@ public abstract class Task implements Saveable{
             }
         }
 
-
         switch (type) {
         case "T":
             return new Todo(name);
@@ -96,7 +98,12 @@ public abstract class Task implements Saveable{
                 throw new InvalidSaveException("Key 'by' does not exist when it is required");
             }
             String by = saveMap.get("by");
-            return new Deadline(name, by);
+            try {
+                LocalDateTime byDateTime = Utils.parseDateTime(by);
+                return new Deadline(name, byDateTime);
+            } catch(DateTimeParseException e) {
+                throw new InvalidSaveException("Datetime is formatted wrongly");
+            }
         case "E":
             if (!saveMap.containsKey("from")) {
                throw new InvalidSaveException("Key 'from' does not exist when it is required");
@@ -107,8 +114,13 @@ public abstract class Task implements Saveable{
 
             String from = saveMap.get("from");
             String to = saveMap.get("to");
-
-            return new Event(name, from, to);
+            try {
+                LocalDateTime fromDateTime = Utils.parseDateTime(from);
+                LocalDateTime toDateTime = Utils.parseDateTime(to);
+                return new Event(name, fromDateTime, toDateTime);
+            } catch(DateTimeParseException e) {
+                throw new InvalidSaveException("Datetime is formatted wrongly");
+            }
         }
 
         throw new InvalidSaveException("Save file format is wrong");

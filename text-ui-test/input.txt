@@ -2,11 +2,11 @@ todo watch anime
 list
 mark 1
 list
-deadline do homework /by 24 june
+deadline do homework /by 2025-05-20 12-23
 list
 mark 2
 list
-event career fair /from 30th june 9am /to 31st june 5pm
+event career fair /from 2025-04-21 09-00 /to 2025-04-22 17-00
 list
 mark 3
 list

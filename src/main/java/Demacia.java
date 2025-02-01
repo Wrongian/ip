@@ -1,5 +1,7 @@
 import exceptions.IncorrectArgumentFormatException;
+import java.time.LocalDateTime;
 
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
 public class Demacia {
@@ -21,42 +23,59 @@ public class Demacia {
             String msg = "Got it. I have added this task:\n" +
                     taskList.getTaskString(index);
             this.terminal.output(msg);
+            // todo: if only one task print differently
             this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+            this.save();
         } catch (IndexOutOfBoundsException e) {
             terminal.output(e.getMessage());
+        } finally {
+            this.terminal.printHorizontal();
         }
-        this.save();
-        this.terminal.printHorizontal();
     }
 
     private void addDeadline(String task, String by) {
         this.terminal.printHorizontal();
         try {
-            int index = taskList.addDeadline(task, by);
+            LocalDateTime byDateTime = Utils.parseDateTime(by);
+            int index = taskList.addDeadline(task, byDateTime);
             String msg = "Got it. I have added this task:\n" +
                     taskList.getTaskString(index);
             this.terminal.output(msg);
+            // todo: if only one task print differently
             this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+            this.save();
         } catch (IndexOutOfBoundsException e) {
             terminal.output(e.getMessage());
+        } catch (DateTimeParseException e) {
+            System.out.println("Date/time format error\nFormat should be: yyyy-MM-dd HH-mm\n" +
+                    "yyyy is year, MM is the month, dd is the day\n" +
+                    "HH is the hour and mm are the minutes");
+        } finally {
+            this.terminal.printHorizontal();
         }
-        this.save();
-        this.terminal.printHorizontal();
     }
 
     private void addEvent(String task, String from, String to) {
         this.terminal.printHorizontal();
         try {
-            int index = taskList.addEvent(task, from, to);
+            LocalDateTime fromDateTime = Utils.parseDateTime(from);
+            LocalDateTime toDateTime = Utils.parseDateTime(to);
+            int index = taskList.addEvent(task, fromDateTime, toDateTime);
             String msg = "Got it. I have added this task:\n" +
                     taskList.getTaskString(index);
             this.terminal.output(msg);
+            // todo: if only one task print differently
             this.terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+            this.save();
         } catch (IndexOutOfBoundsException e) {
             terminal.output(e.getMessage());
+        } catch (DateTimeParseException e) {
+            System.out.println("Date/time format error\nFormat should be: yyyy-MM-dd HH-mm\n" +
+                    "yyyy is year, MM is the month, dd is the day\n" +
+                    "HH is the hour and mm are the minutes");
+        } finally {
+            this.terminal.printHorizontal();
         }
-        this.save();
-        this.terminal.printHorizontal();
     }
 
     public void listTasks() {
