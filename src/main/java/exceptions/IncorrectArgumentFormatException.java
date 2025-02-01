@@ -1,6 +1,6 @@
 package exceptions;
 
-public class IncorrectArgumentFormatException extends DukeException{
+public class IncorrectArgumentFormatException extends DukeException {
 
     public IncorrectArgumentFormatException() {
         super("Incorrect Argument Format");
