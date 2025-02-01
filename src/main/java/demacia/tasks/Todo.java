@@ -1,4 +1,6 @@
-public class Todo extends Task{
+package demacia.tasks;
+
+public class Todo extends Task {
 
     public Todo(String name) {
         this(name, false);

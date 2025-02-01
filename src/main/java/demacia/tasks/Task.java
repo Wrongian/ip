@@ -1,12 +1,15 @@
-import exceptions.InvalidSaveException;
+package demacia.tasks;
+
+import demacia.exceptions.InvalidSaveException;
+import demacia.storage.Saveable;
+import demacia.utils.Utils;
 
 import java.lang.StringBuilder;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
-public abstract class Task implements Saveable{
+public abstract class Task implements Saveable {
 
     private final String name;
     private boolean isDone;

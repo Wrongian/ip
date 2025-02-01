@@ -1,4 +1,4 @@
-package exceptions;
+package demacia.exceptions;
 
 public class FileNotWritableException extends DukeException {
 

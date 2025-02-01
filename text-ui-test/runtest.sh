@@ -25,14 +25,14 @@ then
 fi
 
 # compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../out ../src/main/java/*.java
+if ! javac -cp ../src/main/java -Xlint:none -d ../out ../src/main/java/demacia/*.java
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.txt
-java -classpath ../out Duke < input.txt > ACTUAL.txt
+java -classpath ../out demacia.Demacia < input.txt > ACTUAL.txt
 
 # convert to UNIX format
 cp EXPECTED.txt EXPECTED-UNIX.txt

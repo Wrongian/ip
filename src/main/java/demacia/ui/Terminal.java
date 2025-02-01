@@ -1,3 +1,5 @@
+package demacia.ui;
+
 import java.util.Scanner;
 
 public class Terminal {
