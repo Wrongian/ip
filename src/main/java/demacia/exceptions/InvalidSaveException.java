@@ -1,4 +1,4 @@
-package exceptions;
+package demacia.exceptions;
 
 public class InvalidSaveException extends DukeException {
 

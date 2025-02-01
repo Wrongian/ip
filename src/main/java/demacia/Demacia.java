@@ -1,4 +1,11 @@
-import exceptions.IncorrectArgumentFormatException;
+package demacia;
+
+import demacia.commands.Command;
+import demacia.storage.SaveData;
+import demacia.storage.SaveHandler;
+import demacia.tasks.TaskList;
+import demacia.ui.Terminal;
+import demacia.exceptions.IncorrectArgumentFormatException;
 
 public class Demacia {
     private final Terminal terminal;

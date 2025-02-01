@@ -1,3 +1,7 @@
+package demacia.storage;
+
+import demacia.tasks.TaskList;
+
 public class SaveHandler {
 
     /*

@@ -1,5 +1,7 @@
-import exceptions.FileNotReadableException;
-import exceptions.FileNotWritableException;
+package demacia.storage;
+
+import demacia.exceptions.FileNotReadableException;
+import demacia.exceptions.FileNotWritableException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

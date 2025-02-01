@@ -1,4 +1,4 @@
-package exceptions;
+package demacia.exceptions;
 
 public class DukeException extends Exception {
 

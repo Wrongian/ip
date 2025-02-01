@@ -1,3 +1,10 @@
+package demacia.commands;
+
+import demacia.storage.SaveData;
+import demacia.storage.SaveHandler;
+import demacia.tasks.TaskList;
+import demacia.ui.Terminal;
+
 public abstract class Command {
     private boolean isExit;
 

@@ -1,4 +1,7 @@
-import exceptions.InvalidSaveException;
+package demacia.storage;
+
+import demacia.tasks.TaskList;
+import demacia.exceptions.InvalidSaveException;
 
 public class SaveData implements Saveable {
     private TaskList taskList;

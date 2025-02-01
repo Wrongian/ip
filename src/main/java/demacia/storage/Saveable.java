@@ -1,4 +1,4 @@
-import exceptions.InvalidSaveException;
+package demacia.storage;
 
 public interface Saveable {
 
