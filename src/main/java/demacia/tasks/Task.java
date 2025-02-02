@@ -186,6 +186,11 @@ public abstract class Task implements Saveable {
         }
     }
 
+    /**
+     * Checks if the name of the Todo contains a String.
+     * @param searchString The string to check.
+     * @return Boolean indicating if the name of the Todo contains a String.
+     */
     public boolean nameContainsString(String searchString) {
         return this.name.contains(searchString);
     }

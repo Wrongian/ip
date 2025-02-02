@@ -5,14 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-<<<<<<< HEAD
+import org.junit.jupiter.api.Test;
+
 /**
  * Class to test Utils class.
  */
-=======
-import org.junit.jupiter.api.Test;
-
->>>>>>> branch-A-CodingStandard
 public class UtilsTest {
 
     @Test
