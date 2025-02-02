@@ -18,8 +18,8 @@ public class TodoCommand extends Command {
         try {
             int index = taskList.addTodo(this.name);
 
-            String msg = "Got it. I have added this task:\n" +
-                    taskList.getTaskString(index);
+            String msg = "Got it. I have added this task:\n"
+                    + taskList.getTaskString(index);
             terminal.output(msg);
             // todo: if only one task print differently
             terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");

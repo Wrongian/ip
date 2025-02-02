@@ -1,10 +1,8 @@
 package demacia.tasks;
 
-import demacia.utils.Utils;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import demacia.utils.Utils;
 
 public class Event extends Task {
     private final LocalDateTime from;
@@ -22,18 +20,17 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() +
-                " (from: " + Utils.showDateTime(this.from) +
-                " to: " + Utils.showDateTime(this.to) +
-                ")";
+        return "[E]" + super.toString()
+                + " (from: " + Utils.showDateTime(this.from)
+                + " to: " + Utils.showDateTime(this.to)
+                + ")";
     }
 
     @Override
     public String save() {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH/mm");
-        return super.save() +
-                ",from:" + Utils.formatDateTime(this.from) +
-                ",to:" + Utils.formatDateTime(this.to) +
-                ",type:";
+        return super.save()
+                + ",from:" + Utils.formatDateTime(this.from)
+                + ",to:" + Utils.formatDateTime(this.to)
+                + ",type:";
     }
 }

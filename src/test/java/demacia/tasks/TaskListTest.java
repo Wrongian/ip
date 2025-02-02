@@ -1,8 +1,8 @@
 package demacia.tasks;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import java.lang.StringBuilder;
+
+import org.junit.jupiter.api.Test;
 
 public class TaskListTest {
 
@@ -10,18 +10,22 @@ public class TaskListTest {
     public void save_normal1_correct() {
 
         TaskList taskList = new TaskList();
+
         for (int i = 0; i < 10; i++) {
             TaskStub task = new TaskStub();
             taskList.addToList(task);
         }
+
         String actual = taskList.save();
 
         StringBuilder expectedBuilder = new StringBuilder();
         TaskStub task = new TaskStub();
+
         for (int i = 0; i < 10; i++) {
             expectedBuilder.append(task.save());
             expectedBuilder.append("\n");
         }
+
         expectedBuilder.deleteCharAt(expectedBuilder.length() - 1);
         String expected = expectedBuilder.toString();
 
@@ -34,6 +38,7 @@ public class TaskListTest {
         TaskList taskList = new TaskList();
         TaskStub task = new TaskStub();
         taskList.addToList(task);
+
         String actual = taskList.save();
 
         String expected = task.save();
@@ -57,6 +62,7 @@ public class TaskListTest {
     public void deleteTask_normal1_correct() {
 
         TaskList taskList = new TaskList();
+
         for (int i = 0; i < 10; i++) {
             TaskStub task = new TaskStub();
             taskList.addToList(task);
@@ -73,6 +79,7 @@ public class TaskListTest {
     public void deleteTask_normal2_correct() {
 
         TaskList taskList = new TaskList();
+
         for (int i = 0; i < 10; i++) {
             TaskStub task = new TaskStub();
             taskList.addToList(task);
@@ -88,6 +95,7 @@ public class TaskListTest {
     @Test
     public void deleteTask_emptyList_exception() {
         TaskList taskList = new TaskList();
+
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.deleteTask(0));
 
         try {
@@ -101,8 +109,10 @@ public class TaskListTest {
     @Test
     public void deleteTask_deleteTooManyFromList_exception() {
         TaskList taskList = new TaskList();
+
         for (int i = 0; i < 10; i++) {
             TaskStub task = new TaskStub();
+
             taskList.addToList(task);
         }
 
@@ -123,6 +133,7 @@ public class TaskListTest {
     @Test
     public void deleteTask_deleteOutOfBounds1_exception() {
         TaskList taskList = new TaskList();
+
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.deleteTask(0));
 
         try {
@@ -136,6 +147,7 @@ public class TaskListTest {
     @Test
     public void deleteTask_deleteOutOfBounds2_exception() {
         TaskList taskList = new TaskList();
+
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.deleteTask(0));
         try {
             taskList.deleteTask(101);
@@ -148,6 +160,7 @@ public class TaskListTest {
     @Test
     public void deleteTask_deleteOutOfBounds3_exception() {
         TaskList taskList = new TaskList();
+
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.deleteTask(0));
         try {
             taskList.deleteTask(3);

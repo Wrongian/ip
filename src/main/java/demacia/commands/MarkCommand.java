@@ -17,6 +17,7 @@ public class MarkCommand extends Command {
         // get task
         try {
             taskList.markTask(this.index);
+
             terminal.output("Marked this task as done:");
             terminal.output(taskList.getTaskString(this.index));
         } catch (IndexOutOfBoundsException e) {

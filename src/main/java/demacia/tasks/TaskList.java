@@ -1,11 +1,10 @@
 package demacia.tasks;
 
-import demacia.exceptions.InvalidSaveException;
-import demacia.storage.Saveable;
-
-import java.lang.StringBuilder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import demacia.exceptions.InvalidSaveException;
+import demacia.storage.Saveable;
 
 public class TaskList implements Saveable {
     private static final int MAX_TASKS = 100;
@@ -13,7 +12,7 @@ public class TaskList implements Saveable {
     private int taskIndex;
 
     public TaskList() {
-        this.tasks = new ArrayList<Task>();
+        this.tasks = new ArrayList<>();
         this.taskIndex = 0;
     }
 
@@ -29,6 +28,7 @@ public class TaskList implements Saveable {
         }
         Todo newTodo = new Todo(name);
         addToList(newTodo);
+
         return this.taskIndex - 1;
     }
 
@@ -36,8 +36,10 @@ public class TaskList implements Saveable {
         if (taskIndex + 1 >= TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
         }
+
         Deadline newDeadline = new Deadline(name, by);
         addToList(newDeadline);
+
         return this.taskIndex - 1;
     }
 
@@ -45,8 +47,10 @@ public class TaskList implements Saveable {
         if (taskIndex + 1 >= TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
         }
+
         Event newEvent = new Event(name, from, to);
         addToList(newEvent);
+
         return this.taskIndex - 1;
     }
 
@@ -54,6 +58,7 @@ public class TaskList implements Saveable {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
+
         this.tasks.get(index).markDone();
     }
 
@@ -61,6 +66,7 @@ public class TaskList implements Saveable {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
+
         this.tasks.get(index).unmarkDone();
     }
 
@@ -68,6 +74,7 @@ public class TaskList implements Saveable {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
+
         return this.tasks.get(index).toString();
     }
 
@@ -77,6 +84,7 @@ public class TaskList implements Saveable {
         }
 
         StringBuilder msg = new StringBuilder();
+
         for (int i = 0; i < this.taskIndex; i++) {
             Task curTask = this.tasks.get(i);
             msg.append(String.valueOf(i + 1));
@@ -84,6 +92,7 @@ public class TaskList implements Saveable {
             msg.append(curTask.toString());
             msg.append("\n");
         }
+
         // delete last newline
         if (!msg.isEmpty()) {
             msg.deleteCharAt(msg.length() - 1);
@@ -95,6 +104,7 @@ public class TaskList implements Saveable {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
+
         try {
             this.tasks.remove(index);
             this.taskIndex -= 1;
@@ -106,6 +116,7 @@ public class TaskList implements Saveable {
     @Override
     public String save() {
         StringBuilder stringBuilder = new StringBuilder();
+
         for (int i = 0; i < this.taskIndex; i++) {
             Task curTask = this.tasks.get(i);
             stringBuilder.append(curTask.save());
@@ -122,9 +133,11 @@ public class TaskList implements Saveable {
 
     public static TaskList load(String saveString) throws InvalidSaveException {
         String[] taskStrings = saveString.split("\n");
+
         TaskList taskList = new TaskList();
-        for (int i = 0; i < taskStrings.length; i++) {
-            Task newTask = Task.load(taskStrings[i]);
+
+        for (String taskString : taskStrings) {
+            Task newTask = Task.load(taskString);
             try {
                 taskList.addToList(newTask);
             } catch (IndexOutOfBoundsException e) {

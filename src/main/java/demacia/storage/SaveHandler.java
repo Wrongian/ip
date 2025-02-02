@@ -12,12 +12,13 @@ public class SaveHandler {
     */
 
     // hard coded save paths
-    private final static String savePath = "./data/save.txt";
-    private final static String dirPath = "./data";
+    private static final String savePath = "./data/save.txt";
+    private static final String dirPath = "./data";
 
     // todo: account for special characters in the strings(maybe instead use \n to split)
     public static void save(SaveData saveData) {
         String saveString = saveData.save();
+
         FileHandler.createDirIfNotExists(dirPath);
         try {
             FileHandler.writeFile(SaveHandler.savePath, saveString);
@@ -30,11 +31,13 @@ public class SaveHandler {
     public static SaveData load() {
         try {
             String data = FileHandler.readFile(savePath);
+
             return new SaveData(data);
         } catch (Exception e) {
             System.out.println("Save cannot be loaded");
             System.out.println(e.getMessage());
             System.out.println("Initialising to default values");
+
             return new SaveData(new TaskList());
         }
     }

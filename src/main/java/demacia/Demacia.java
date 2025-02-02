@@ -1,11 +1,11 @@
 package demacia;
 
 import demacia.commands.Command;
+import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
 import demacia.storage.SaveHandler;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
-import demacia.exceptions.IncorrectArgumentFormatException;
 
 public class Demacia {
     private final Terminal terminal;
@@ -16,8 +16,9 @@ public class Demacia {
         this.taskList = new TaskList();
 
         SaveData saveData = SaveHandler.load();
+
         this.taskList = saveData.getTaskList();
-   }
+    }
 
     public void greet() {
         this.terminal.printHorizontal();
@@ -36,9 +37,12 @@ public class Demacia {
             String msg = this.terminal.input();
 
             this.terminal.printHorizontal();
+
             try {
                 Command cmd = Parser.parseCommand(msg);
+
                 cmd.execute(this.taskList, this.terminal);
+
                 isExit = cmd.getIsExit();
             } catch (IncorrectArgumentFormatException e) {
                 this.terminal.output(e.getMessage());

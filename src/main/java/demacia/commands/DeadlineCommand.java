@@ -1,11 +1,10 @@
 package demacia.commands;
 
+import java.time.LocalDateTime;
+
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 
 public class DeadlineCommand extends Command {
 
@@ -16,13 +15,15 @@ public class DeadlineCommand extends Command {
         this.name = name;
         this.by = by;
     }
+
     @Override
     public void execute(TaskList taskList, Terminal terminal) {
+
         try {
             int index = taskList.addDeadline(this.name, this.by);
 
-            String msg = "Got it. I have added this task:\n" +
-                    taskList.getTaskString(index);
+            String msg = "Got it. I have added this task:\n"
+                    + taskList.getTaskString(index);
             terminal.output(msg);
             // todo: if only one task print differently
             terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");

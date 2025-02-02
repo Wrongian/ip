@@ -1,6 +1,4 @@
 package demacia.utils;
-import java.lang.StringBuilder;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -16,7 +14,7 @@ public class Utils {
         // check if every character is a digit
         for (int i = 0; i < str.length(); i++) {
             if (!Character.isDigit(str.charAt(i))) {
-               return false;
+                return false;
             }
         }
         return true;

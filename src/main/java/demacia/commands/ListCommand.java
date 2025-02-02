@@ -1,7 +1,7 @@
 package demacia.commands;
 
-import demacia.ui.Terminal;
 import demacia.tasks.TaskList;
+import demacia.ui.Terminal;
 
 public class ListCommand extends Command {
 

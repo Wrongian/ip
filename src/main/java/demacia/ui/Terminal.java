@@ -7,7 +7,7 @@ public class Terminal {
     private final Scanner scanner;
 
     public Terminal() {
-       this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
 
     public void printHorizontal() {

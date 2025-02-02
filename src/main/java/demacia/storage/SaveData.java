@@ -1,7 +1,7 @@
 package demacia.storage;
 
-import demacia.tasks.TaskList;
 import demacia.exceptions.InvalidSaveException;
+import demacia.tasks.TaskList;
 
 public class SaveData implements Saveable {
     private TaskList taskList;
@@ -25,6 +25,7 @@ public class SaveData implements Saveable {
         } catch (InvalidSaveException e) {
             System.out.println(e.getMessage());
             System.out.println("Using blank list");
+
             this.taskList = new TaskList();
         }
     }
