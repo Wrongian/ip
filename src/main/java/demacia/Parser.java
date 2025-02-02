@@ -65,7 +65,7 @@ public class Parser {
                             "Usage: \nmark <task number>");
                 }
                 // check if int
-                if (!Utils.stringIsInt(first_arg)) {
+                if (!Utils.stringIsIndex(first_arg)) {
                     throw new IncorrectArgumentFormatException(
                             "Usage: \nmark <task number>");
                 }
@@ -77,7 +77,7 @@ public class Parser {
                             "Usage: \nunmark <task number>");
                 }
                 // check if int
-                if (!Utils.stringIsInt(first_arg)) {
+                if (!Utils.stringIsIndex(first_arg)) {
                     throw new IncorrectArgumentFormatException(
                             "Usage: \nmark <task number>");
                 }
@@ -88,7 +88,7 @@ public class Parser {
                             "Usage: \ndelete <task number>");
                 }
                 // check if int
-                if (!Utils.stringIsInt(first_arg)) {
+                if (!Utils.stringIsIndex(first_arg)) {
                     throw new IncorrectArgumentFormatException(
                             "Usage: \nmark <task number>");
                 }

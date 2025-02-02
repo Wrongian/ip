@@ -6,7 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Utils {
-    public static boolean stringIsInt(String str) {
+    public static boolean stringIsIndex(String str) {
+        // only checks if positive integer
         // empty string
         if (str.isEmpty()) {
             return false;
