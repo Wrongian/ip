@@ -209,6 +209,13 @@ public class TaskList implements Saveable {
         return taskList;
     }
 
+    /**
+     * Finds a Task in the TaskList by a String.
+     *
+     * @param searchString The String to search for a task.
+     * @return TaskList of found tasks.
+     * @throws IndexOutOfBoundsException If the found taskList has more than the maximum allowed number of tasks.
+     */
     public TaskList findTaskByString(String searchString) throws IndexOutOfBoundsException {
         TaskList taskList = new TaskList();
 

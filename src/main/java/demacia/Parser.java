@@ -1,5 +1,9 @@
 package demacia;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+
 import demacia.commands.ByeCommand;
 import demacia.commands.Command;
 import demacia.commands.DeadlineCommand;
@@ -12,10 +16,6 @@ import demacia.commands.TodoCommand;
 import demacia.commands.UnmarkCommand;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.utils.Utils;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import java.util.HashMap;
 
 /**
  * Class to encapsulate the methods to parse commands.
@@ -159,14 +159,14 @@ public class Parser {
                         + " MM is the month, dd is the day\n"
                         + "HH is the hour and mm are the minutes");
             }
-            case "find":
-                if (firstArg.isEmpty() || args.length > 1) {
-                    throw new IncorrectArgumentFormatException(
-                            "Usage: \nfind <text to search for>");
-                }
-                return new FindCommand(firstArg);
-            default:
-                throw new IncorrectArgumentFormatException("Command does not exist");
+        case "find":
+            if (firstArg.isEmpty() || args.length > 1) {
+                throw new IncorrectArgumentFormatException(
+                        "Usage: \nfind <text to search for>");
+            }
+            return new FindCommand(firstArg);
+        default:
+            throw new IncorrectArgumentFormatException("Command does not exist");
         }
     }
 }
