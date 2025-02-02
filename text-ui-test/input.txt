@@ -18,4 +18,7 @@ unmark 3
 list
 delete 3
 list
+find anime
+mark 1
+find anime
 bye

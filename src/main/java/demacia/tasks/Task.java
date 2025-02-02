@@ -128,4 +128,8 @@ public abstract class Task implements Saveable {
 
         throw new InvalidSaveException("Save file format is wrong");
     }
+
+    public boolean nameContainsString(String searchString) {
+        return this.name.contains(searchString);
+    }
 }

@@ -17,34 +17,29 @@ public class TaskList implements Saveable {
         this.taskIndex = 0;
     }
 
-    public void addToList(Task task) {
+    public void addToList(Task task) throws ArrayIndexOutOfBoundsException{
+        if (taskIndex + 1 >= TaskList.MAX_TASKS) {
+            throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
+        }
+
         // modify task array
         this.tasks.add(task);
         this.taskIndex += 1;
     }
 
     public int addTodo(String name) throws ArrayIndexOutOfBoundsException {
-        if (taskIndex + 1 >= TaskList.MAX_TASKS) {
-            throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
-        }
         Todo newTodo = new Todo(name);
         addToList(newTodo);
         return this.taskIndex - 1;
     }
 
     public int addDeadline(String name, LocalDateTime by) throws IndexOutOfBoundsException {
-        if (taskIndex + 1 >= TaskList.MAX_TASKS) {
-            throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
-        }
         Deadline newDeadline = new Deadline(name, by);
         addToList(newDeadline);
         return this.taskIndex - 1;
     }
 
     public int addEvent(String name, LocalDateTime from, LocalDateTime to) throws IndexOutOfBoundsException {
-        if (taskIndex + 1 >= TaskList.MAX_TASKS) {
-            throw new ArrayIndexOutOfBoundsException("Maximum tasks reached\nTask not created\nPlease delete tasks");
-        }
         Event newEvent = new Event(name, from, to);
         addToList(newEvent);
         return this.taskIndex - 1;
@@ -73,7 +68,7 @@ public class TaskList implements Saveable {
 
     public String listTasks() {
         if (this.taskIndex == 0) {
-            return "List is empty";
+            return "No tasks found";
         }
 
         StringBuilder msg = new StringBuilder();
@@ -131,6 +126,19 @@ public class TaskList implements Saveable {
                 throw new InvalidSaveException("Too many tasks in the save file");
             }
         }
+        return taskList;
+    }
+
+    public TaskList findTaskByString(String searchString) throws IndexOutOfBoundsException {
+        TaskList taskList = new TaskList();
+
+        for (int i = 0; i < this.taskIndex; i++) {
+            Task task = this.tasks.get(i);
+            if (task.nameContainsString(searchString)) {
+                taskList.addToList(task);
+            }
+        }
+
         return taskList;
     }
 }

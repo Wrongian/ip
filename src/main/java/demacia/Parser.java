@@ -1,6 +1,7 @@
 package demacia;
 
 import demacia.commands.*;
+import demacia.commands.TodoCommand;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.utils.Utils;
 
@@ -129,7 +130,12 @@ public class Parser {
                             "yyyy is year, MM is the month, dd is the day\n" +
                             "HH is the hour and mm are the minutes");
                 }
-
+            case "find":
+                if (first_arg.isEmpty() || args.length > 1) {
+                    throw new IncorrectArgumentFormatException(
+                            "Usage: \nfind <text to search for>");
+                }
+                return new FindCommand(first_arg);
             default:
                 throw new IncorrectArgumentFormatException("Command does not exist");
         }

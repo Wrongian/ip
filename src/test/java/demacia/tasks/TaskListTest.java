@@ -82,7 +82,7 @@ public class TaskListTest {
             taskList.deleteTask(i);
         }
 
-        assert(taskList.listTasks().equals("List is empty"));
+        assert(taskList.listTasks().equals("No tasks found"));
     }
 
     @Test
