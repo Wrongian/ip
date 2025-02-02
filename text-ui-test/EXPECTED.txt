@@ -92,5 +92,17 @@ I have removed the task
 2.[D][ ] do homework (by: 2025-05-20 12:23)
 ------------------------------
 ------------------------------
+Here are the matching tasks in your list:
+1.[T][ ] watch anime
+------------------------------
+------------------------------
+Marked this task as done:
+[T][X] watch anime
+------------------------------
+------------------------------
+Here are the matching tasks in your list:
+1.[T][X] watch anime
+------------------------------
+------------------------------
 Buybye, see ya later...
 ------------------------------
