@@ -32,8 +32,10 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "demacia"
     archiveClassifier = null
+    mainClassName = "demacia.Demacia"
+    archiveFileName = "Demacia.jar"
 }
 
 run{
