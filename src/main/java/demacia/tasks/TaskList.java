@@ -95,9 +95,12 @@ public class TaskList implements Saveable {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
-
-        this.tasks.remove(index);
-        this.taskIndex -= 1;
+        try {
+            this.tasks.remove(index);
+            this.taskIndex -= 1;
+        } catch (IndexOutOfBoundsException e) {
+            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+        }
     }
 
     @Override
