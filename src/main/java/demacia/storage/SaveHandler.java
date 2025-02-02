@@ -2,6 +2,9 @@ package demacia.storage;
 
 import demacia.tasks.TaskList;
 
+/**
+ * Class to handle saving data to files.
+ */
 public class SaveHandler {
 
     /*
@@ -16,6 +19,12 @@ public class SaveHandler {
     private final static String dirPath = "./data";
 
     // todo: account for special characters in the strings(maybe instead use \n to split)
+
+    /**
+     * Saves the SaveData as a file with the default save file path.
+     *
+     * @param saveData The SaveData to save into a file.
+     */
     public static void save(SaveData saveData) {
         String saveString = saveData.save();
         FileHandler.createDirIfNotExists(dirPath);
@@ -27,6 +36,11 @@ public class SaveHandler {
         }
     }
 
+    /**
+     * Load the SavaData from the default save file path and returns it.
+     *
+     * @return The SaveData from the default save file path.
+     */
     public static SaveData load() {
         try {
             String data = FileHandler.readFile(savePath);

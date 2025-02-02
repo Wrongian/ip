@@ -7,15 +7,31 @@ import demacia.ui.Terminal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Class for handling the 'deadline' Command.
+ */
 public class DeadlineCommand extends Command {
 
     private final String name;
     private final LocalDateTime by;
 
+    /**
+     * Constructor for a new DeadlineCommand object.
+     *
+     * @param name The name of the Deadline object.
+     * @param by The LocalDateTime of the deadline of the Deadline object.
+     */
     public DeadlineCommand(String name, LocalDateTime by) {
         this.name = name;
         this.by = by;
     }
+
+    /**
+     * Executes the deadline Command....
+     *
+     * @param taskList the TaskList used to execute the Command.
+     * @param terminal the Terminal used to execute the Command.
+     */
     @Override
     public void execute(TaskList taskList, Terminal terminal) {
         try {

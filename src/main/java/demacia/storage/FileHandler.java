@@ -9,7 +9,19 @@ import java.lang.StringBuilder;
 import java.io.IOException;
 import java.io.FileWriter;
 
+
+/**
+ * Class to methods relating to handling files.
+ */
 public class FileHandler {
+    /**
+     * Read a file with the specified file path.
+     *
+     * @param filePath The file path as a string.
+     * @return The read file as String.
+     * @throws FileNotFoundException If the file cannot be located at the given path.
+     * @throws FileNotReadableException If the file cannot be read.
+     */
     public static String readFile(String filePath) throws FileNotFoundException, FileNotReadableException {
         StringBuilder stringBuilder = new StringBuilder();
         File file = new File(filePath);
@@ -30,6 +42,14 @@ public class FileHandler {
         return stringBuilder.toString();
     }
 
+    /**
+     * Write a String to a file with a designated file path.
+     *
+     * @param filePath The path to write to as a String.
+     * @param toWrite The string to write.
+     * @throws FileNotWritableException If the file is not writable.
+     * @throws IOException Indicates failed or interrupted I/O operation(s).
+     */
     public static void writeFile(String filePath, String toWrite) throws FileNotWritableException, IOException {
         File file = new File(filePath);
 
@@ -48,6 +68,11 @@ public class FileHandler {
 
     }
 
+    /**
+     * Checks if the directory exists and creates it if it doesnt exist.
+     *
+     * @param dirPath The path of the directory to check/create.
+     */
     public static void createDirIfNotExists(String dirPath) {
        File directory = new File(dirPath);
 

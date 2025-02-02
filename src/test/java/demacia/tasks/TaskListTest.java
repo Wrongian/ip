@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.lang.StringBuilder;
 
+/**
+ * Class to test TaskList class
+ */
 public class TaskListTest {
 
     @Test
