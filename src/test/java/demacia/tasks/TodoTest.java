@@ -2,6 +2,9 @@ package demacia.tasks;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class to test Todo class.
+ */
 public class TodoTest {
 
     @Test

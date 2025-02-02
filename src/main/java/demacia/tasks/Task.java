@@ -9,41 +9,80 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
+/**
+ * Class to abstract methods relating to the class for other tasks to subclass.
+ */
 public abstract class Task implements Saveable {
 
     private final String name;
     private boolean isDone;
 
+    /**
+     * Constructor to create a default task.
+     * @param name The name of the task as a String.
+     */
     public Task(String name) {
         this.name = name;
         this.isDone = false;
     }
 
+    /**
+     * Constructor to create a default task.
+     *
+     * @param name The name of the task as a String.
+     * @param isDone Boolean for whether the task is already done.
+     */
     public Task(String name, boolean isDone) {
        this(name);
        this.isDone = isDone;
     }
 
+    /**
+     * Gets the name of the Task as a String.
+     *
+     * @return Name of the task as a String.
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Marks the task as done.
+     */
     public void markDone() {
         this.isDone = true;
     }
 
+    /**
+     * Marks the task as not done.
+     */
     public void unmarkDone() {
         this.isDone = false;
     }
 
+    /**
+     * Gets whether the task is done or not done as a boolean.
+     *
+     * @return Boolean for whether the task is done.
+     */
     public boolean getIsDone() {
         return this.isDone;
     }
 
+    /**
+     * Sets whether the task is done.
+     *
+     * @param isDone The status to set the task(done or not).
+     */
     public void setDone(boolean isDone) {
         this.isDone = isDone;
     }
 
+    /**
+     * Returns the String representation of the task.
+     *
+     * @return The String representation of the task.
+     */
     @Override
     public String toString() {
         StringBuilder msg = new StringBuilder();
@@ -56,11 +95,23 @@ public abstract class Task implements Saveable {
         return msg.toString();
     }
 
+    /**
+     * Returns the serialised String representation of the task for saving.
+     *
+     * @return Serialised String representation of the task for saving.
+     */
     @Override
     public String save() {
         return "name:" + this.name + ",isMarked:" + this.getIsDone();
     }
 
+    /**
+     * Loads a Task using the serialised representation of a Task.
+     *
+     * @param saveString The serialised representation of a Task.
+     * @return The Task that from the serialised String.
+     * @throws InvalidSaveException If there are any formatting errors with the save.
+     */
     public static Task load(String saveString) throws InvalidSaveException{
         String[] keyValueArray = saveString.split(",");
         HashMap<String, String> saveMap = new HashMap<String, String>();

@@ -8,7 +8,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
+/**
+ * Class to encapsulate the methods to parse commands.
+ */
 public class Parser {
+
+    /**
+     * Parses the String into a Command object.
+     *
+     * @param msg The String to parse into a Command object.
+     * @return The parsed Command object.
+     * @throws IncorrectArgumentFormatException If the String cannot be parsed into a Command.
+     */
     public static Command parseCommand(String msg) throws IncorrectArgumentFormatException {
         // hashmap rest of the arguments
         String[] args = msg.split(" /");

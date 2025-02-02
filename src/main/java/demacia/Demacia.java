@@ -7,10 +7,16 @@ import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
 import demacia.exceptions.IncorrectArgumentFormatException;
 
+/**
+ * Class to represent the chatbot.
+ */
 public class Demacia {
     private final Terminal terminal;
     private TaskList taskList;
 
+    /**
+     * Constructor to create the chatbot.
+     */
     public Demacia() {
         this.terminal = new Terminal();
         this.taskList = new TaskList();
@@ -19,6 +25,9 @@ public class Demacia {
         this.taskList = saveData.getTaskList();
    }
 
+    /**
+     * Greets the user.
+     */
     public void greet() {
         this.terminal.printHorizontal();
         this.terminal.output("Hello I am Demacia, a chatbot");
@@ -26,6 +35,9 @@ public class Demacia {
         this.terminal.printHorizontal();
     }
 
+    /**
+     * Starts the bot and runs an infinite loop until a command exits.
+     */
     public void start() {
         // get messages from user
         // todo: enums for the commands

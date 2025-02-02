@@ -4,15 +4,29 @@ import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
 
+/**
+ * Class for handling the 'todo' Command.
+ */
 public class TodoCommand extends Command {
 
     private final String name;
 
+    /**
+     * Constructor for creating a TodoCommand.
+     *
+     * @param name The name of the todo to be created.
+     */
     public TodoCommand(String name) {
         this.name = name;
 
     }
 
+    /**
+     * Executes the TodoCommand.
+     *
+     * @param taskList the TaskList used to execute the Command.
+     * @param terminal the Terminal used to execute the Command.
+     */
     @Override
     public void execute(TaskList taskList, Terminal terminal) {
         try {

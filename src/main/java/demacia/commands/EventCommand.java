@@ -6,18 +6,34 @@ import demacia.ui.Terminal;
 
 import java.time.LocalDateTime;
 
+/**
+ * Class for handling the 'event' Command.
+ */
 public class EventCommand extends Command {
 
     private final String name;
     private final LocalDateTime from;
     private final LocalDateTime to;
 
+    /**
+     * Constructor for the EventCommand.
+     *
+     * @param name The name for the Event Object.
+     * @param from The LocalDateTime for which the event starts.
+     * @param to The LocalDateTime for which the event ends.
+     */
     public EventCommand(String name, LocalDateTime from, LocalDateTime to) {
         this.name = name;
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * Executes the EventCommand.
+     *
+     * @param taskList the TaskList used to execute the Command.
+     * @param terminal the Terminal used to execute the Command.
+     */
     @Override
     public void execute(TaskList taskList, Terminal terminal) {
         try {
