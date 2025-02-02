@@ -13,7 +13,7 @@ public class Terminal {
      * Constructor to create a Terminal.
      */
     public Terminal() {
-       this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
 
     /**

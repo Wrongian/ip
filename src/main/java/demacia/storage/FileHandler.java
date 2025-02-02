@@ -1,13 +1,14 @@
 package demacia.storage;
 
-import demacia.exceptions.FileNotReadableException;
-import demacia.exceptions.FileNotWritableException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.lang.StringBuilder;
-import java.io.IOException;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+import demacia.exceptions.FileNotReadableException;
+import demacia.exceptions.FileNotWritableException;
+
 
 
 /**
@@ -74,12 +75,12 @@ public class FileHandler {
      * @param dirPath The path of the directory to check/create.
      */
     public static void createDirIfNotExists(String dirPath) {
-       File directory = new File(dirPath);
+        File directory = new File(dirPath);
 
-       // todo: check if securityException is ever thrown
-       if (!directory.exists()) {
-           directory.mkdir();
-       }
+        // todo: check if securityException is ever thrown
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
 
     }
 

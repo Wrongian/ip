@@ -11,7 +11,8 @@ public class FileNotReadableException extends DukeException {
      * @param filePath The path to the file that is not readable(causing the error).
      */
     public FileNotReadableException(String filePath) {
-        super("File at path " + filePath + " is not readable\nPlease enable the save file" +
-                " to be readable by changing its permissions");
+        super("File at path " + filePath
+                + " is not readable\nPlease enable the save file"
+                + " to be readable by changing its permissions");
     }
 }

@@ -1,14 +1,18 @@
 package demacia.utils;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+<<<<<<< HEAD
 /**
  * Class to test Utils class.
  */
+=======
+import org.junit.jupiter.api.Test;
+
+>>>>>>> branch-A-CodingStandard
 public class UtilsTest {
 
     @Test
@@ -60,7 +64,7 @@ public class UtilsTest {
         LocalDateTime dateTimeStr = LocalDateTime.of(2002, 1, 22, 6, 0);
 
         String expected = "2002-01-22 06-00";
-        String actual =  Utils.formatDateTime(dateTimeStr);
+        String actual = Utils.formatDateTime(dateTimeStr);
         assert(expected.equals(actual));
     }
 
@@ -69,7 +73,7 @@ public class UtilsTest {
         String input = "2002-01-22 06-00";
 
         LocalDateTime expected = LocalDateTime.of(2002, 1, 22, 6, 0);
-        LocalDateTime actual =  Utils.parseDateTime(input);
+        LocalDateTime actual = Utils.parseDateTime(input);
         assert(expected.equals(actual));
     }
 

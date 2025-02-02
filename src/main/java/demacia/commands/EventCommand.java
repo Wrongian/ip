@@ -1,10 +1,10 @@
 package demacia.commands;
 
+import java.time.LocalDateTime;
+
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
-
-import java.time.LocalDateTime;
 
 /**
  * Class for handling the 'event' Command.
@@ -38,11 +38,14 @@ public class EventCommand extends Command {
     public void execute(TaskList taskList, Terminal terminal) {
         try {
             int index = taskList.addEvent(this.name, this.from, this.to);
-            String msg = "Got it. I have added this task:\n" +
-                    taskList.getTaskString(index);
+
+            String msg = "Got it. I have added this task:\n"
+                    + taskList.getTaskString(index);
             terminal.output(msg);
+
             // todo: if only one task print differently
             terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+
             this.save(new SaveData(taskList));
 
         } catch (IndexOutOfBoundsException e) {

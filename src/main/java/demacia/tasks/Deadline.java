@@ -1,10 +1,8 @@
 package demacia.tasks;
 
-import demacia.utils.Utils;
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
+import demacia.utils.Utils;
 
 /**
  * Class representing a Deadline.
@@ -30,8 +28,8 @@ public class Deadline extends Task {
      * @param by LocalDateTime object to describe the Deadline.
      */
     public Deadline(String name, boolean isMarked, LocalDateTime by) {
-       super(name, isMarked);
-       this.by = by;
+        super(name, isMarked);
+        this.by = by;
     }
 
     /**
@@ -41,9 +39,9 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() +
-               " (by: " + Utils.showDateTime(this.by) +
-               ")";
+        return "[D]" + super.toString()
+                + " (by: " + Utils.showDateTime(this.by)
+                + ")";
     }
 
     /**
@@ -53,8 +51,8 @@ public class Deadline extends Task {
      */
     @Override
     public String save() {
-        return super.save() + "," +
-                "by:" + Utils.formatDateTime(this.by) + ",type:D";
+        return super.save() + ","
+                + "by:" + Utils.formatDateTime(this.by) + ",type:D";
     }
 
 

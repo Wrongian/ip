@@ -1,13 +1,12 @@
 package demacia.tasks;
 
-import demacia.exceptions.InvalidSaveException;
-import demacia.storage.Saveable;
-import demacia.utils.Utils;
-
-import java.lang.StringBuilder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+
+import demacia.exceptions.InvalidSaveException;
+import demacia.storage.Saveable;
+import demacia.utils.Utils;
 
 /**
  * Class to abstract methods relating to the class for other tasks to subclass.
@@ -33,8 +32,8 @@ public abstract class Task implements Saveable {
      * @param isDone Boolean for whether the task is already done.
      */
     public Task(String name, boolean isDone) {
-       this(name);
-       this.isDone = isDone;
+        this(name);
+        this.isDone = isDone;
     }
 
     /**
@@ -86,12 +85,14 @@ public abstract class Task implements Saveable {
     @Override
     public String toString() {
         StringBuilder msg = new StringBuilder();
+
         if (this.getIsDone()) {
             msg.append("[X] ");
         } else {
             msg.append("[ ] ");
         }
         msg.append(this.getName());
+
         return msg.toString();
     }
 
@@ -112,16 +113,19 @@ public abstract class Task implements Saveable {
      * @return The Task that from the serialised String.
      * @throws InvalidSaveException If there are any formatting errors with the save.
      */
-    public static Task load(String saveString) throws InvalidSaveException{
+    public static Task load(String saveString) throws InvalidSaveException {
         String[] keyValueArray = saveString.split(",");
-        HashMap<String, String> saveMap = new HashMap<String, String>();
-        for (int i = 0; i < keyValueArray.length; i++) {
-            String[] keyValuePair = keyValueArray[i].split(":");
+
+        HashMap<String, String> saveMap = new HashMap<>();
+
+        for (String s : keyValueArray) {
+            String[] keyValuePair = s.split(":");
             if (!(keyValuePair.length == 2)) {
                 throw new InvalidSaveException("Save file format is wrong");
             }
             saveMap.put(keyValuePair[0], keyValuePair[1]);
         }
+
         if (!saveMap.containsKey("type")) {
             throw new InvalidSaveException("Key 'type' does not exist when it is required");
         }
@@ -146,7 +150,7 @@ public abstract class Task implements Saveable {
 
         switch (type) {
         case "T":
-            return new Todo(name);
+            return new Todo(name, isMarked);
         case "D":
             if (!saveMap.containsKey("by")) {
                 throw new InvalidSaveException("Key 'by' does not exist when it is required");
@@ -154,13 +158,13 @@ public abstract class Task implements Saveable {
             String by = saveMap.get("by");
             try {
                 LocalDateTime byDateTime = Utils.parseDateTime(by);
-                return new Deadline(name, byDateTime);
-            } catch(DateTimeParseException e) {
+                return new Deadline(name, isMarked, byDateTime);
+            } catch (DateTimeParseException e) {
                 throw new InvalidSaveException("Datetime is formatted wrongly");
             }
         case "E":
             if (!saveMap.containsKey("from")) {
-               throw new InvalidSaveException("Key 'from' does not exist when it is required");
+                throw new InvalidSaveException("Key 'from' does not exist when it is required");
             }
             if (!saveMap.containsKey("to")) {
                 throw new InvalidSaveException("Key 'from' does not exist when it is required");
@@ -168,16 +172,18 @@ public abstract class Task implements Saveable {
 
             String from = saveMap.get("from");
             String to = saveMap.get("to");
+
             try {
                 LocalDateTime fromDateTime = Utils.parseDateTime(from);
                 LocalDateTime toDateTime = Utils.parseDateTime(to);
-                return new Event(name, fromDateTime, toDateTime);
-            } catch(DateTimeParseException e) {
+
+                return new Event(name, isMarked, fromDateTime, toDateTime);
+            } catch (DateTimeParseException e) {
                 throw new InvalidSaveException("Datetime is formatted wrongly");
             }
+        default:
+            throw new InvalidSaveException("Save file format is wrong");
         }
-
-        throw new InvalidSaveException("Save file format is wrong");
     }
 
     public boolean nameContainsString(String searchString) {
