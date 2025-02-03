@@ -8,7 +8,7 @@ Type what you desire
 ------------------------------
 Got it. I have added this task:
 [T][ ] watch anime
-Now you have 1 tasks in the list
+Now you have 1 task in the list
 ------------------------------
 ------------------------------
 1.[T][ ] watch anime
@@ -92,7 +92,7 @@ I have removed the task
 2.[D][ ] do homework (by: 2025-05-20 12:23)
 ------------------------------
 ------------------------------
-Here are the matching tasks in your list:
+Find results:
 1.[T][ ] watch anime
 ------------------------------
 ------------------------------
@@ -100,7 +100,7 @@ Marked this task as done:
 [T][X] watch anime
 ------------------------------
 ------------------------------
-Here are the matching tasks in your list:
+Find results:
 1.[T][X] watch anime
 ------------------------------
 ------------------------------

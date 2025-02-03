@@ -23,6 +23,15 @@ public class TaskList implements Saveable {
     }
 
     /**
+     * Gets the total number of tasks in the list.
+     *
+     * @return The total number of tasks in the list
+     */
+    public int getTotalTasks() {
+        return this.taskIndex;
+    }
+
+    /**
      * Adds a Task to the TaskList.
      *
      * @param task The task to add to the list.
