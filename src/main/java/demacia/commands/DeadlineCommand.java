@@ -40,8 +40,12 @@ public class DeadlineCommand extends Command {
             String msg = "Got it. I have added this task:\n"
                     + taskList.getTaskString(index);
             terminal.output(msg);
-            // todo: if only one task print differently
-            terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+
+            if (taskList.getTotalTasks() == 1) {
+                terminal.output("Now you have 1 task in the list");
+            } else {
+                terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+            }
 
             this.save(new SaveData(taskList));
         } catch (IndexOutOfBoundsException e) {
