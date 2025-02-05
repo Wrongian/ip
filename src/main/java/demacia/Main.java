@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private final Demacia demacia = new Demacia();
 
+    private static final int MIN_HEIGHT = 300;
+    private static final int MIN_WIDTH = 400;
+
     /**
      * Starts the application.
      *
@@ -25,6 +28,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            stage.setMinHeight(Main.MIN_HEIGHT);
+            stage.setMinWidth(Main.MIN_WIDTH);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
