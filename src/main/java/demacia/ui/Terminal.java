@@ -1,6 +1,7 @@
 package demacia.ui;
 
 import java.util.Scanner;
+import java.lang.StringBuilder;
 
 /**
  * Class to represent the terminal UI of the chatbot.
@@ -8,19 +9,14 @@ import java.util.Scanner;
 public class Terminal {
 
     private final Scanner scanner;
+    private StringBuilder stringBuffer;
 
     /**
      * Constructor to create a Terminal.
      */
     public Terminal() {
         this.scanner = new Scanner(System.in);
-    }
-
-    /**
-     * Prints a horizontal line in standard output.
-     */
-    public void printHorizontal() {
-        System.out.println("------------------------------");
+        this.stringBuffer = new StringBuilder();
     }
 
     /**
@@ -32,13 +28,20 @@ public class Terminal {
         return this.scanner.nextLine();
     }
 
-    /**
-     * Prints a String to the standard output.
-     *
-     * @param msg The String to print to the standard output.
-     */
-    public void output(String msg) {
-        System.out.println(msg);
+    public void buffer(String newOutput) {
+        this.stringBuffer.append(newOutput);
+        this.stringBuffer.append("\n");
+    }
+
+    public String getOutput() {
+
+        String outputString = this.stringBuffer.toString();
+        this.clear();
+        return outputString;
+    }
+
+    private void clear() {
+        this.stringBuffer = new StringBuilder();
     }
 
 }

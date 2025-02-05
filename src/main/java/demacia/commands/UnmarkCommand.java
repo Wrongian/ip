@@ -31,10 +31,10 @@ public class UnmarkCommand extends Command {
         try {
             taskList.unmarkTask(this.index);
 
-            terminal.output("Marked this task as not done yet:");
-            terminal.output(taskList.getTaskString(this.index));
+            terminal.buffer("Marked this task as not done yet:");
+            terminal.buffer(taskList.getTaskString(this.index));
         } catch (IndexOutOfBoundsException e) {
-            terminal.output(e.getMessage());
+            terminal.buffer(e.getMessage());
         }
         this.save(new SaveData(taskList));
     }

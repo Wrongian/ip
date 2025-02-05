@@ -27,47 +27,35 @@ public class Demacia {
     }
 
     /**
-     * Greets the user.
+     * Gets the greeting for the chatbot.
      */
-    public void greet() {
-        this.terminal.printHorizontal();
-        this.terminal.output("Hello I am Demacia, a chatbot");
-        this.terminal.output("Type what you desire");
-        this.terminal.printHorizontal();
+    public String getGreeting() {
+        this.terminal.buffer("Hello I am Demacia, a chatbot");
+        this.terminal.buffer("Type what you desire");
+        return this.terminal.getOutput();
     }
 
     /**
-     * Starts the bot and runs an infinite loop until a command exits.
+     * Gets a response from the bot based on an input.
+     *
+      * @param input The input to the bot to elicit a response.
      */
-    public void start() {
+    public DemaciaResponse getResponse(String input) {
         // get messages from user
         // todo: enums for the commands
         // todo: higher order function so that dont have to add horizontal lines to everything
         boolean isExit = false;
-        while (!isExit) {
+        try {
             // get command
-            String msg = this.terminal.input();
+            Command cmd = Parser.parseCommand(input);
 
-            this.terminal.printHorizontal();
-
-            try {
-                Command cmd = Parser.parseCommand(msg);
-
-                cmd.execute(this.taskList, this.terminal);
-
-                isExit = cmd.getIsExit();
-            } catch (IncorrectArgumentFormatException e) {
-                this.terminal.output(e.getMessage());
-            } finally {
-                this.terminal.printHorizontal();
-            }
+            // execute command
+            cmd.execute(this.taskList, this.terminal);
+            isExit = cmd.getIsExit();
+        } catch (IncorrectArgumentFormatException e) {
+            this.terminal.buffer(e.getMessage());
+        } finally {
+            return new DemaciaResponse(this.terminal.getOutput(), isExit);
         }
-        System.exit(0);
-    }
-
-    public static void main(String[] args) {
-        Demacia bot = new Demacia();
-        bot.greet();
-        bot.start();
     }
 }

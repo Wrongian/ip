@@ -28,11 +28,11 @@ public class FindCommand extends Command {
     public void execute(TaskList taskList, Terminal terminal) {
         try {
             TaskList resultList = taskList.findTaskByString(this.searchString);
-            terminal.output("Find results:");
-            terminal.output(resultList.listTasks());
+            terminal.buffer("Find results:");
+            terminal.buffer(resultList.listTasks());
         } catch (IndexOutOfBoundsException e) {
             // todo: change this to command error
-            terminal.output(e.getMessage());
+            terminal.buffer(e.getMessage());
         }
     }
 }

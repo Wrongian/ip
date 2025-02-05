@@ -32,10 +32,10 @@ public class MarkCommand extends Command {
         try {
             taskList.markTask(this.index);
 
-            terminal.output("Marked this task as done:");
-            terminal.output(taskList.getTaskString(this.index));
+            terminal.buffer("Marked this task as done:");
+            terminal.buffer(taskList.getTaskString(this.index));
         } catch (IndexOutOfBoundsException e) {
-            terminal.output(e.getMessage());
+            terminal.buffer(e.getMessage());
         }
         this.save(new SaveData(taskList));
     }
