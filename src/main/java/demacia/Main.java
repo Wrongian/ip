@@ -13,11 +13,11 @@ import javafx.stage.Stage;
  * Class representing the entire application
  */
 public class Main extends Application {
-    private final Demacia demacia = new Demacia();
 
     private static final int MIN_HEIGHT = 300;
     private static final int MIN_WIDTH = 400;
 
+    private final Demacia demacia = new Demacia();
     /**
      * Starts the application.
      *

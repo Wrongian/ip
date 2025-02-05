@@ -1,7 +1,6 @@
 package demacia.ui;
 
 import java.util.Scanner;
-import java.lang.StringBuilder;
 
 /**
  * Class to represent the terminal UI of the chatbot.
@@ -28,11 +27,21 @@ public class Terminal {
         return this.scanner.nextLine();
     }
 
+    /**
+     * Adds the input to the buffer.
+     *
+     * @param newOutput The input to append to the buffer.
+     */
     public void buffer(String newOutput) {
         this.stringBuffer.append(newOutput);
         this.stringBuffer.append("\n");
     }
 
+    /**
+     * Flushes the buffer.
+     *
+     * @return The flushed buffer as a String.
+     */
     public String getOutput() {
 
         String outputString = this.stringBuffer.toString();
@@ -40,6 +49,9 @@ public class Terminal {
         return outputString;
     }
 
+    /**
+     * Clear the buffer.
+     */
     private void clear() {
         this.stringBuffer = new StringBuilder();
     }
