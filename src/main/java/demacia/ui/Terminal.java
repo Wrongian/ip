@@ -8,19 +8,14 @@ import java.util.Scanner;
 public class Terminal {
 
     private final Scanner scanner;
+    private StringBuilder stringBuffer;
 
     /**
      * Constructor to create a Terminal.
      */
     public Terminal() {
         this.scanner = new Scanner(System.in);
-    }
-
-    /**
-     * Prints a horizontal line in standard output.
-     */
-    public void printHorizontal() {
-        System.out.println("------------------------------");
+        this.stringBuffer = new StringBuilder();
     }
 
     /**
@@ -33,12 +28,32 @@ public class Terminal {
     }
 
     /**
-     * Prints a String to the standard output.
+     * Adds the input to the buffer.
      *
-     * @param msg The String to print to the standard output.
+     * @param newOutput The input to append to the buffer.
      */
-    public void output(String msg) {
-        System.out.println(msg);
+    public void buffer(String newOutput) {
+        this.stringBuffer.append(newOutput);
+        this.stringBuffer.append("\n");
+    }
+
+    /**
+     * Flushes the buffer.
+     *
+     * @return The flushed buffer as a String.
+     */
+    public String getOutput() {
+
+        String outputString = this.stringBuffer.toString();
+        this.clear();
+        return outputString;
+    }
+
+    /**
+     * Clear the buffer.
+     */
+    private void clear() {
+        this.stringBuffer = new StringBuilder();
     }
 
 }

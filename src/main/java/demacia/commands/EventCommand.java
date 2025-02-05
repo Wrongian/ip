@@ -41,20 +41,20 @@ public class EventCommand extends Command {
 
             String msg = "Got it. I have added this task:\n"
                     + taskList.getTaskString(index);
-            terminal.output(msg);
+            terminal.buffer(msg);
 
 
             if (taskList.getTotalTasks() == 1) {
-                terminal.output("Now you have 1 task in the list");
+                terminal.buffer("Now you have 1 task in the list");
             } else {
-                terminal.output("Now you have " + String.valueOf(index + 1) + " tasks in the list");
+                terminal.buffer("Now you have " + String.valueOf(index + 1) + " tasks in the list");
             }
 
             this.save(new SaveData(taskList));
 
         } catch (IndexOutOfBoundsException e) {
             // todo: change this to command error
-            terminal.output(e.getMessage());
+            terminal.buffer(e.getMessage());
         }
     }
 }

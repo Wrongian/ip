@@ -34,10 +34,10 @@ public class DeleteCommand extends Command {
 
             taskList.deleteTask(this.index);
 
-            terminal.output("I have removed the task");
-            terminal.output(taskString);
+            terminal.buffer("I have removed the task");
+            terminal.buffer(taskString);
         } catch (IndexOutOfBoundsException e) {
-            terminal.output(e.getMessage());
+            terminal.buffer(e.getMessage());
         }
 
         this.save(new SaveData(taskList));

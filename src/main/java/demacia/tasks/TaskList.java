@@ -143,7 +143,7 @@ public class TaskList implements Saveable {
         for (int i = 0; i < this.taskIndex; i++) {
             Task curTask = this.tasks.get(i);
             msg.append(String.valueOf(i + 1));
-            msg.append(".");
+            msg.append(". ");
             msg.append(curTask.toString());
             msg.append("\n");
         }
