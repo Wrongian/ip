@@ -32,6 +32,9 @@ public class FileHandler {
         if (!file.canRead()) {
             throw new FileNotReadableException(filePath);
         }
+
+        assert(file.isFile());
+
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -62,6 +65,8 @@ public class FileHandler {
         if (!file.canWrite()) {
             throw new FileNotWritableException(filePath);
         }
+
+        assert(file.isFile());
 
         FileWriter fileWriter = new FileWriter(filePath);
         fileWriter.write(toWrite);
