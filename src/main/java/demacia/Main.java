@@ -30,12 +30,17 @@ public class Main extends Application {
         try {
             stage.setMinHeight(Main.MIN_HEIGHT);
             stage.setMinWidth(Main.MIN_WIDTH);
+
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
+
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+
             fxmlLoader.<MainWindow>getController().setDemacia(demacia);
+
             stage.show();
+
             fxmlLoader.<MainWindow>getController().showGreeting();
         } catch (IOException e) {
             e.printStackTrace();

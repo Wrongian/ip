@@ -46,6 +46,7 @@ public class Terminal {
 
         String outputString = this.stringBuffer.toString();
         this.clear();
+        assert(this.stringBuffer.isEmpty());
         return outputString;
     }
 

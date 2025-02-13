@@ -168,6 +168,8 @@ public class TaskList implements Saveable {
         try {
             this.tasks.remove(index);
             this.taskIndex -= 1;
+
+            assert(this.taskIndex >= 0);
         } catch (IndexOutOfBoundsException e) {
             throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
         }
