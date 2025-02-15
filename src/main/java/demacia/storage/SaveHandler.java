@@ -15,8 +15,8 @@ public class SaveHandler {
     */
 
     // hard coded save paths
-    private static final String savePath = "./data/save.txt";
-    private static final String dirPath = "./data";
+    private static final String SAVE_PATH = "./data/save.txt";
+    private static final String DIR_PATH = "./data";
 
     // todo: account for special characters in the strings(maybe instead use \n to split)
 
@@ -28,9 +28,9 @@ public class SaveHandler {
     public static void save(SaveData saveData) {
         String saveString = saveData.save();
 
-        FileHandler.createDirIfNotExists(dirPath);
+        FileHandler.createDirIfNotExists(SaveHandler.DIR_PATH);
         try {
-            FileHandler.writeFile(SaveHandler.savePath, saveString);
+            FileHandler.writeFile(SaveHandler.SAVE_PATH, saveString);
         } catch (Exception e) {
             System.out.println("Tasks cannot be saved");
             System.out.println(e.getMessage());
@@ -44,7 +44,7 @@ public class SaveHandler {
      */
     public static SaveData load() {
         try {
-            String data = FileHandler.readFile(savePath);
+            String data = FileHandler.readFile(SaveHandler.SAVE_PATH);
 
             return new SaveData(data);
         } catch (Exception e) {
