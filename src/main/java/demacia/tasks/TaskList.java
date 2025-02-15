@@ -12,6 +12,7 @@ import demacia.storage.Saveable;
 public class TaskList implements Saveable {
     private static final int MAX_TASKS = 100;
     private static final String NO_TASK_MESSAGE = "No tasks found";
+    private static final String NOT_EXIST_MESSAGE = "Task does not exist in the listd";
     private final ArrayList<Task> tasks;
     private int taskIndex;
 
@@ -96,7 +97,7 @@ public class TaskList implements Saveable {
      */
     public void markTask(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
-            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+            throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
 
         this.tasks.get(index).markDone();
@@ -109,7 +110,7 @@ public class TaskList implements Saveable {
      */
     public void unmarkTask(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
-            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+            throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
 
         this.tasks.get(index).unmarkDone();
@@ -123,7 +124,7 @@ public class TaskList implements Saveable {
      */
     public String getTaskString(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
-            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+            throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
 
         return this.tasks.get(index).toString();
@@ -163,7 +164,7 @@ public class TaskList implements Saveable {
      */
     public void deleteTask(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
-            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+            throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
 
         try {
@@ -172,7 +173,7 @@ public class TaskList implements Saveable {
 
             assert(this.taskIndex >= 0);
         } catch (IndexOutOfBoundsException e) {
-            throw new ArrayIndexOutOfBoundsException("Task does not exist in the list");
+            throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
     }
 
