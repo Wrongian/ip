@@ -11,7 +11,7 @@ public class Deadline extends Task {
     private final LocalDateTime by;
 
     /**
-     * Constrcutor for a Deadline object.
+     * Constructor for a Deadline object.
      *
      * @param name Name as a String for the Deadline object.
      * @param by LocalDateTime object to describe the Deadline.
@@ -21,7 +21,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Constrcutor for a Deadline object.
+     * Constructor for a Deadline object.
      *
      * @param name Name as a String for the Deadline object.
      * @param isMarked Boolean for whether the task is already done.
