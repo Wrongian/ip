@@ -1,5 +1,8 @@
 package demacia.commands;
 
+import java.util.HashMap;
+
+import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
@@ -47,5 +50,23 @@ public class TodoCommand extends Command {
             // todo: change this to command error
             terminal.buffer(e.getMessage());
         }
+    }
+
+    /**
+     * Factory method to make a TodoCommand.
+     *
+     * @param firstArg The first argument of the command.
+     * @param args The rest of the arguments as a String array.
+     * @param cmds The rest of the arguments as a HashMap.
+     * @return The created TodoCommand.
+     * @throws IncorrectArgumentFormatException If the arguments are formatted incorrectly or are invalid.
+     */
+    public static TodoCommand makeCommand(
+            String firstArg, String[] args, HashMap<String, String> cmds) throws IncorrectArgumentFormatException {
+        if (firstArg.isEmpty() || args.length > 1) {
+            throw new IncorrectArgumentFormatException(
+                    "Usage: \ntodo <task name>");
+        }
+        return new TodoCommand(firstArg);
     }
 }

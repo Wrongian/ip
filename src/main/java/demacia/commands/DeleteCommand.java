@@ -1,8 +1,12 @@
 package demacia.commands;
 
+import java.util.HashMap;
+
+import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
+import demacia.utils.Utils;
 
 /**
  * Class for handling the 'delete' Command.
@@ -41,5 +45,29 @@ public class DeleteCommand extends Command {
         }
 
         this.save(new SaveData(taskList));
+    }
+
+    /**
+     * Factory method to make a DeleteCommand.
+     *
+     * @param firstArg The first argument of the command.
+     * @param args The rest of the arguments as a String array.
+     * @param cmds The rest of the arguments as a HashMap.
+     * @return The created DeleteCommand.
+     * @throws IncorrectArgumentFormatException If the arguments are formatted incorrectly or are invalid.
+     */
+    public static DeleteCommand makeCommand(
+            String firstArg, String[] args, HashMap<String, String> cmds) throws IncorrectArgumentFormatException {
+        if (firstArg.isEmpty() || args.length > 1) {
+            throw new IncorrectArgumentFormatException(
+                    "Usage: \ndelete <task number>");
+        }
+        // check if int
+        if (!Utils.stringIsIndex(firstArg)) {
+            throw new IncorrectArgumentFormatException(
+                    "Usage: \nmark <task number>");
+        }
+
+        return new DeleteCommand(Integer.parseInt(firstArg) - 1);
     }
 }

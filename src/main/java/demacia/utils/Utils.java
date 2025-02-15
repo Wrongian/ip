@@ -7,6 +7,8 @@ import java.time.format.DateTimeParseException;
  * Class to contain various utility methods.
  */
 public class Utils {
+    private static final String FROM_DATE_PATTERN = "yyyy-MM-dd HH-mm";
+    private static final String TO_DATE_PATTERN = "yyyy-MM-dd HH:mm";
 
     /**
      * Checks if the String is an index of an array.
@@ -40,7 +42,7 @@ public class Utils {
      * @throws DateTimeParseException If the String cannot be parsed.
      */
     public static LocalDateTime parseDateTime(String dateTime) throws DateTimeParseException {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(Utils.FROM_DATE_PATTERN);
         return LocalDateTime.parse(dateTime, dateTimeFormatter);
     }
 
@@ -54,7 +56,7 @@ public class Utils {
      * @throws DateTimeParseException If the LocalDateTime object cannot be formatted.
      */
     public static String formatDateTime(LocalDateTime dateTime) throws DateTimeParseException {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(Utils.FROM_DATE_PATTERN);
         return dateTimeFormatter.format(dateTime);
     }
 
@@ -68,7 +70,7 @@ public class Utils {
      * @throws DateTimeParseException If the LocalDateTime object cannot be parsed into a String.
      */
     public static String showDateTime(LocalDateTime dateTime) throws DateTimeParseException {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(Utils.TO_DATE_PATTERN);
         return dateTimeFormatter.format(dateTime);
     }
 }

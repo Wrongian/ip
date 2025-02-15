@@ -1,7 +1,5 @@
 package demacia;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
 import demacia.commands.ByeCommand;
@@ -15,7 +13,6 @@ import demacia.commands.MarkCommand;
 import demacia.commands.TodoCommand;
 import demacia.commands.UnmarkCommand;
 import demacia.exceptions.IncorrectArgumentFormatException;
-import demacia.utils.Utils;
 
 /**
  * Class to encapsulate the methods to parse commands.
@@ -33,6 +30,46 @@ public class Parser {
         // hashmap rest of the arguments
         String[] args = msg.split(" /");
 
+        HashMap<String, String> cmds = Parser.getCmds(args);
+
+        // build base args
+        String[] baseArgs = args[0].split(" ");
+
+        String firstArg = Parser.getFirstArg(baseArgs);
+
+        String cmd = baseArgs[0];
+
+        switch (cmd) {
+        case "bye":
+            return ByeCommand.makeCommand(firstArg, args, cmds);
+        case "list":
+            return ListCommand.makeCommand(firstArg, args, cmds);
+        case "mark":
+            return MarkCommand.makeCommand(firstArg, args, cmds);
+        case "unmark":
+            return UnmarkCommand.makeCommand(firstArg, args, cmds);
+        case "delete":
+            return DeleteCommand.makeCommand(firstArg, args, cmds);
+        case "todo":
+            return TodoCommand.makeCommand(firstArg, args, cmds);
+        case "deadline":
+            return DeadlineCommand.makeCommand(firstArg, args, cmds);
+        case "event":
+            return EventCommand.makeCommand(firstArg, args, cmds);
+        case "find":
+            return FindCommand.makeCommand(firstArg, args, cmds);
+        default:
+            throw new IncorrectArgumentFormatException("Command does not exist");
+        }
+    }
+
+    /**
+     * Get the arguments of a command from the raw split String array of arguments.
+     *
+     * @param args The arguments of the command.
+     * @return Return the arguments of the command as a HashMap.
+     */
+    private static HashMap<String, String> getCmds(String[] args) {
         HashMap<String, String> cmds = new HashMap<>();
 
         if (args.length > 1) {
@@ -52,14 +89,19 @@ public class Parser {
             }
         }
 
-        // build base args
-        String[] baseArgs = args[0].split(" ");
-        String firstArg = "";
-        String cmd = "";
+        return cmds;
+    }
 
-        if (baseArgs.length == 1) {
-            cmd = baseArgs[0];
-        } else if (baseArgs.length > 1) {
+    /**
+     * Gets the first argument of the command from the raw String
+     * of the first part of the arguments of the command.
+     *
+     * @param baseArgs The first part of the arguments of the command as a String Array.
+     * @return The first argument of the command as a String.
+     */
+    private static String getFirstArg(String[] baseArgs) {
+        String firstArg = "";
+        if (baseArgs.length > 1) {
             StringBuilder nameBuilder = new StringBuilder();
 
             for (int i = 1; i < baseArgs.length; i++) {
@@ -72,101 +114,7 @@ public class Parser {
             }
 
             firstArg = nameBuilder.toString();
-            cmd = baseArgs[0];
         }
-        switch (cmd) {
-        case "bye":
-            if (!firstArg.isEmpty() || args.length > 1) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \nbye");
-            }
-            return new ByeCommand();
-        case "list":
-            if (!firstArg.isEmpty() || args.length > 1) {
-                throw new IncorrectArgumentFormatException("Usage: \nlist");
-            }
-            return new ListCommand();
-        case "mark":
-            if (firstArg.isEmpty() || args.length > 1) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \nmark <task number>");
-            }
-            // check if int
-            if (!Utils.stringIsIndex(firstArg)) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \nmark <task number>");
-            }
-
-            return new MarkCommand(Integer.parseInt(firstArg) - 1);
-        case "unmark":
-            if (firstArg.isEmpty() || args.length > 1) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \nunmark <task number>");
-            }
-            // check if int
-            if (!Utils.stringIsIndex(firstArg)) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \nmark <task number>");
-            }
-            return new UnmarkCommand(Integer.parseInt(firstArg) - 1);
-        case "delete":
-            if (firstArg.isEmpty() || args.length > 1) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \ndelete <task number>");
-            }
-            // check if int
-            if (!Utils.stringIsIndex(firstArg)) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \nmark <task number>");
-            }
-
-            return new DeleteCommand(Integer.parseInt(firstArg) - 1);
-        case "todo":
-            if (firstArg.isEmpty() || args.length > 1) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \ntodo <task name>");
-            }
-            return new TodoCommand(firstArg);
-        case "deadline":
-            if (firstArg.isEmpty() || args.length != 2 || !cmds.containsKey("by")) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \ntodo <task name> /by <deadline>");
-            }
-            try {
-                LocalDateTime byDateTime = Utils.parseDateTime(cmds.get("by"));
-                return new DeadlineCommand(firstArg, byDateTime);
-            } catch (DateTimeParseException e) {
-                throw new IncorrectArgumentFormatException("Date/time format error\n"
-                        + "Format should be: yyyy-MM-dd HH-mm\n"
-                        + "yyyy is year,"
-                        + " MM is the month, dd is the day\n"
-                        + "HH is the hour and mm are the minutes");
-            }
-        case "event":
-            if (firstArg.isEmpty() || args.length != 3
-                    || !cmds.containsKey("from") || !cmds.containsKey("to")) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \ntodo <task name> /from <from> /to <to>");
-            }
-            try {
-                LocalDateTime fromDateTime = Utils.parseDateTime(cmds.get("from"));
-                LocalDateTime toDateTime = Utils.parseDateTime(cmds.get("to"));
-                return new EventCommand(firstArg, fromDateTime, toDateTime);
-            } catch (DateTimeParseException e) {
-                throw new IncorrectArgumentFormatException("Date/time format error\n"
-                        + "Format should be: yyyy-MM-dd HH-mm\n"
-                        + "yyyy is year,"
-                        + " MM is the month, dd is the day\n"
-                        + "HH is the hour and mm are the minutes");
-            }
-        case "find":
-            if (firstArg.isEmpty() || args.length > 1) {
-                throw new IncorrectArgumentFormatException(
-                        "Usage: \nfind <text to search for>");
-            }
-            return new FindCommand(firstArg);
-        default:
-            throw new IncorrectArgumentFormatException("Command does not exist");
-        }
+        return firstArg;
     }
 }

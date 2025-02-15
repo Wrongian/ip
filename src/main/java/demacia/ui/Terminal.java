@@ -51,7 +51,7 @@ public class Terminal {
     }
 
     /**
-     * Clear the buffer.
+     * Clears the buffer.
      */
     private void clear() {
         this.stringBuffer = new StringBuilder();

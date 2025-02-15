@@ -23,7 +23,8 @@ public class FileHandler {
      * @throws FileNotFoundException If the file cannot be located at the given path.
      * @throws FileNotReadableException If the file cannot be read.
      */
-    public static String readFile(String filePath) throws FileNotFoundException, FileNotReadableException {
+    public static String readFile(
+            String filePath) throws FileNotFoundException, FileNotReadableException, SecurityException {
         StringBuilder stringBuilder = new StringBuilder();
         File file = new File(filePath);
         if (!file.exists()) {
@@ -35,6 +36,7 @@ public class FileHandler {
 
         assert(file.isFile());
 
+        // read the file
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -54,7 +56,8 @@ public class FileHandler {
      * @throws FileNotWritableException If the file is not writable.
      * @throws IOException Indicates failed or interrupted I/O operation(s).
      */
-    public static void writeFile(String filePath, String toWrite) throws FileNotWritableException, IOException {
+    public static void writeFile(
+            String filePath, String toWrite) throws FileNotWritableException, IOException, SecurityException {
         File file = new File(filePath);
 
         // create file if doesnt exist
@@ -68,6 +71,7 @@ public class FileHandler {
 
         assert(file.isFile());
 
+        // write to the file
         FileWriter fileWriter = new FileWriter(filePath);
         fileWriter.write(toWrite);
         fileWriter.close();
@@ -79,10 +83,9 @@ public class FileHandler {
      *
      * @param dirPath The path of the directory to check/create.
      */
-    public static void createDirIfNotExists(String dirPath) {
+    public static void createDirIfNotExists(String dirPath) throws SecurityException {
         File directory = new File(dirPath);
 
-        // todo: check if securityException is ever thrown
         if (!directory.exists()) {
             directory.mkdir();
         }

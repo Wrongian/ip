@@ -42,8 +42,6 @@ public class Demacia {
      */
     public DemaciaResponse getResponse(String input) {
         // get messages from user
-        // todo: enums for the commands
-        // todo: higher order function so that dont have to add horizontal lines to everything
         boolean isExit = false;
         try {
             // get command

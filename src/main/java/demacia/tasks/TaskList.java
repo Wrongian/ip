@@ -11,6 +11,7 @@ import demacia.storage.Saveable;
  */
 public class TaskList implements Saveable {
     private static final int MAX_TASKS = 100;
+    private static final String NO_TASK_MESSAGE = "No tasks found";
     private final ArrayList<Task> tasks;
     private int taskIndex;
 
@@ -135,7 +136,7 @@ public class TaskList implements Saveable {
      */
     public String listTasks() {
         if (this.taskIndex == 0) {
-            return "No tasks found";
+            return TaskList.NO_TASK_MESSAGE;
         }
 
         StringBuilder msg = new StringBuilder();
