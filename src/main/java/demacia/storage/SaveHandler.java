@@ -32,6 +32,7 @@ public class SaveHandler {
         try {
             FileHandler.writeFile(SaveHandler.SAVE_PATH, saveString);
         } catch (Exception e) {
+            // todo: custom error message for errors and return custom error
             System.out.println("Tasks cannot be saved");
             System.out.println(e.getMessage());
         }
@@ -48,6 +49,8 @@ public class SaveHandler {
 
             return new SaveData(data);
         } catch (Exception e) {
+            // todo: custom error message for errors and return custom error
+            System.out.println("Tasks cannot be saved");
             System.out.println("Save cannot be loaded");
             System.out.println(e.getMessage());
             System.out.println("Initialising to default values");
