@@ -35,6 +35,7 @@ public class FileHandler {
 
         assert(file.isFile());
 
+        // read the file
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -68,6 +69,7 @@ public class FileHandler {
 
         assert(file.isFile());
 
+        // write to the file
         FileWriter fileWriter = new FileWriter(filePath);
         fileWriter.write(toWrite);
         fileWriter.close();

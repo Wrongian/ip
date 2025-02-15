@@ -1,10 +1,14 @@
 package demacia.commands;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 
+import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
+import demacia.utils.Utils;
 
 /**
  * Class for handling the 'deadline' Command.
@@ -51,6 +55,33 @@ public class DeadlineCommand extends Command {
         } catch (IndexOutOfBoundsException e) {
             // todo: change this to command error
             terminal.buffer("Too many tasks");
+        }
+    }
+
+    /**
+     * Factory method to make a DeadlineCommand.
+     *
+     * @param firstArg The first argument of the command.
+     * @param args The rest of the arguments as a String array.
+     * @param cmds The rest of the arguments as a HashMap.
+     * @return The created DeadlineCommand.
+     * @throws IncorrectArgumentFormatException If the arguments are formatted incorrectly or are invalid.
+     */
+    public static DeadlineCommand makeCommand(
+            String firstArg, String[] args, HashMap<String, String> cmds) throws IncorrectArgumentFormatException {
+        if (firstArg.isEmpty() || args.length != 2 || !cmds.containsKey("by")) {
+            throw new IncorrectArgumentFormatException(
+                    "Usage: \ntodo <task name> /by <deadline>");
+        }
+        try {
+            LocalDateTime byDateTime = Utils.parseDateTime(cmds.get("by"));
+            return new DeadlineCommand(firstArg, byDateTime);
+        } catch (DateTimeParseException e) {
+            throw new IncorrectArgumentFormatException("Date/time format error\n"
+                    + "Format should be: yyyy-MM-dd HH-mm\n"
+                    + "yyyy is year,"
+                    + " MM is the month, dd is the day\n"
+                    + "HH is the hour and mm are the minutes");
         }
     }
 }

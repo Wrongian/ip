@@ -1,12 +1,9 @@
 package demacia.tasks;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
 import demacia.exceptions.InvalidSaveException;
 import demacia.storage.Saveable;
-import demacia.utils.Utils;
 
 /**
  * Class to abstract methods relating to the class for other tasks to subclass.
@@ -116,15 +113,7 @@ public abstract class Task implements Saveable {
     public static Task load(String saveString) throws InvalidSaveException {
         String[] keyValueArray = saveString.split(",");
 
-        HashMap<String, String> saveMap = new HashMap<>();
-
-        for (String s : keyValueArray) {
-            String[] keyValuePair = s.split(":");
-            if (!(keyValuePair.length == 2)) {
-                throw new InvalidSaveException("Save file format is wrong");
-            }
-            saveMap.put(keyValuePair[0], keyValuePair[1]);
-        }
+        HashMap<String, String> saveMap = Task.buildSaveMap(keyValueArray);
 
         if (!saveMap.containsKey("type")) {
             throw new InvalidSaveException("Key 'type' does not exist when it is required");
@@ -150,40 +139,36 @@ public abstract class Task implements Saveable {
 
         switch (type) {
         case "T":
-            return new Todo(name, isMarked);
+            return Todo.load(name, isMarked);
         case "D":
-            if (!saveMap.containsKey("by")) {
-                throw new InvalidSaveException("Key 'by' does not exist when it is required");
-            }
-            String by = saveMap.get("by");
-            try {
-                LocalDateTime byDateTime = Utils.parseDateTime(by);
-                return new Deadline(name, isMarked, byDateTime);
-            } catch (DateTimeParseException e) {
-                throw new InvalidSaveException("Datetime is formatted wrongly");
-            }
+            return Deadline.load(name, isMarked, saveMap);
         case "E":
-            if (!saveMap.containsKey("from")) {
-                throw new InvalidSaveException("Key 'from' does not exist when it is required");
-            }
-            if (!saveMap.containsKey("to")) {
-                throw new InvalidSaveException("Key 'from' does not exist when it is required");
-            }
-
-            String from = saveMap.get("from");
-            String to = saveMap.get("to");
-
-            try {
-                LocalDateTime fromDateTime = Utils.parseDateTime(from);
-                LocalDateTime toDateTime = Utils.parseDateTime(to);
-
-                return new Event(name, isMarked, fromDateTime, toDateTime);
-            } catch (DateTimeParseException e) {
-                throw new InvalidSaveException("Datetime is formatted wrongly");
-            }
+            return Event.load(name, isMarked, saveMap);
         default:
             throw new InvalidSaveException("Save file format is wrong");
         }
+    }
+
+    /**
+     * Builds a HashMap based on the key value pairs in the save file.
+     * @param keyValueArray The key value pairs in the save file.
+     * @return The HashMap based on the key value pairs in the save file.
+     * @throws InvalidSaveException If the format of the key value pairs in the save file are wrong.
+     */
+    private static HashMap<String, String> buildSaveMap(
+            String[] keyValueArray) throws InvalidSaveException {
+
+        HashMap<String, String> saveMap = new HashMap<>();
+
+        for (String s : keyValueArray) {
+            String[] keyValuePair = s.split(":");
+            if (!(keyValuePair.length == 2)) {
+                throw new InvalidSaveException("Save file format is wrong");
+            }
+            saveMap.put(keyValuePair[0], keyValuePair[1]);
+        }
+
+        return saveMap;
     }
 
     /**

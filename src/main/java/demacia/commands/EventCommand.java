@@ -1,10 +1,14 @@
 package demacia.commands;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 
+import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
+import demacia.utils.Utils;
 
 /**
  * Class for handling the 'event' Command.
@@ -55,6 +59,35 @@ public class EventCommand extends Command {
         } catch (IndexOutOfBoundsException e) {
             // todo: change this to command error
             terminal.buffer(e.getMessage());
+        }
+    }
+
+    /**
+     * Factory method to make a EventCommand.
+     *
+     * @param firstArg The first argument of the command.
+     * @param args The rest of the arguments as a String array.
+     * @param cmds The rest of the arguments as a HashMap.
+     * @return The created EventCommand.
+     * @throws IncorrectArgumentFormatException If the arguments are formatted incorrectly or are invalid.
+     */
+    public static EventCommand makeCommand(
+            String firstArg, String[] args, HashMap<String, String> cmds) throws IncorrectArgumentFormatException {
+        if (firstArg.isEmpty() || args.length != 3
+                || !cmds.containsKey("from") || !cmds.containsKey("to")) {
+            throw new IncorrectArgumentFormatException(
+                    "Usage: \ntodo <task name> /from <from> /to <to>");
+        }
+        try {
+            LocalDateTime fromDateTime = Utils.parseDateTime(cmds.get("from"));
+            LocalDateTime toDateTime = Utils.parseDateTime(cmds.get("to"));
+            return new EventCommand(firstArg, fromDateTime, toDateTime);
+        } catch (DateTimeParseException e) {
+            throw new IncorrectArgumentFormatException("Date/time format error\n"
+                    + "Format should be: yyyy-MM-dd HH-mm\n"
+                    + "yyyy is year,"
+                    + " MM is the month, dd is the day\n"
+                    + "HH is the hour and mm are the minutes");
         }
     }
 }

@@ -1,7 +1,10 @@
 package demacia.tasks;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 
+import demacia.exceptions.InvalidSaveException;
 import demacia.utils.Utils;
 
 /**
@@ -53,6 +56,32 @@ public class Deadline extends Task {
     public String save() {
         return super.save() + ","
                 + "by:" + Utils.formatDateTime(this.by) + ",type:D";
+    }
+
+    /**
+     * Loads the save file representation of the Deadline object into an
+     * actual Deadline object.
+     *
+     * @param name The name of the Deadline object.
+     * @param isMarked If the Deadline object is marked.
+     * @param saveMap The arguments of the Deadline object as a HashMap.
+     * @return The created Deadline object.
+     * @throws InvalidSaveException If the save file representations is wrong.
+     */
+    public static Deadline load(
+            String name, boolean isMarked,
+            HashMap<String, String> saveMap) throws InvalidSaveException {
+
+        if (!saveMap.containsKey("by")) {
+            throw new InvalidSaveException("Key 'by' does not exist when it is required");
+        }
+        String by = saveMap.get("by");
+        try {
+            LocalDateTime byDateTime = Utils.parseDateTime(by);
+            return new Deadline(name, isMarked, byDateTime);
+        } catch (DateTimeParseException e) {
+            throw new InvalidSaveException("Datetime is formatted wrongly");
+        }
     }
 
 

@@ -1,5 +1,8 @@
 package demacia.commands;
 
+import java.util.HashMap;
+
+import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
 
@@ -34,5 +37,23 @@ public class FindCommand extends Command {
             // todo: change this to command error
             terminal.buffer(e.getMessage());
         }
+    }
+
+    /**
+     * Factory method to make a FindCommand.
+     *
+     * @param firstArg The first argument of the command.
+     * @param args The rest of the arguments as a String array.
+     * @param cmds The rest of the arguments as a HashMap.
+     * @return The created FindCommand.
+     * @throws IncorrectArgumentFormatException If the arguments are formatted incorrectly or are invalid.
+     */
+    public static FindCommand makeCommand(
+            String firstArg, String[] args, HashMap<String, String> cmds) throws IncorrectArgumentFormatException {
+        if (firstArg.isEmpty() || args.length > 1) {
+            throw new IncorrectArgumentFormatException(
+                    "Usage: \nfind <text to search for>");
+        }
+        return new FindCommand(firstArg);
     }
 }

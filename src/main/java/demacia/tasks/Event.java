@@ -1,7 +1,10 @@
 package demacia.tasks;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 
+import demacia.exceptions.InvalidSaveException;
 import demacia.utils.Utils;
 
 /**
@@ -60,5 +63,39 @@ public class Event extends Task {
                 + ",from:" + Utils.formatDateTime(this.from)
                 + ",to:" + Utils.formatDateTime(this.to)
                 + ",type:";
+    }
+
+    /**
+     * Loads the save file representation of the Event object into an
+     * actual Event object.
+     *
+     * @param name The name of the Event object.
+     * @param isMarked If the Event object is marked.
+     * @param saveMap The arguments of the Event object as a HashMap.
+     * @return The created Event object.
+     * @throws InvalidSaveException If the save file representations is wrong.
+     */
+    public static Event load(
+            String name, boolean isMarked,
+            HashMap<String, String> saveMap) throws InvalidSaveException {
+
+        if (!saveMap.containsKey("from")) {
+            throw new InvalidSaveException("Key 'from' does not exist when it is required");
+        }
+        if (!saveMap.containsKey("to")) {
+            throw new InvalidSaveException("Key 'from' does not exist when it is required");
+        }
+
+        String from = saveMap.get("from");
+        String to = saveMap.get("to");
+
+        try {
+            LocalDateTime fromDateTime = Utils.parseDateTime(from);
+            LocalDateTime toDateTime = Utils.parseDateTime(to);
+
+            return new Event(name, isMarked, fromDateTime, toDateTime);
+        } catch (DateTimeParseException e) {
+            throw new InvalidSaveException("Datetime is formatted wrongly");
+        }
     }
 }
