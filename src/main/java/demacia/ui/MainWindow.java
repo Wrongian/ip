@@ -15,6 +15,12 @@ import javafx.scene.layout.VBox;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
+    private static final String USER_IMAGE_PATH = "/images/user.png";
+    private static final String DEMACIA_IMAGE_PATH = "/images/demacia.png";
+
+    private final Image userImage = new Image(this.getClass().getResourceAsStream(USER_IMAGE_PATH));
+    private final Image demaciaImage = new Image(this.getClass().getResourceAsStream(DEMACIA_IMAGE_PATH));
+
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -25,9 +31,6 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private Demacia demacia;
-
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
-    private Image demaciaImage = new Image(this.getClass().getResourceAsStream("/images/demacia.png"));
 
     /**
      * Initialise the main GUI.
@@ -51,6 +54,9 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
+        assert(this.userImage != null);
+        assert(this.demaciaImage != null);
+
         String input = userInput.getText();
         DemaciaResponse response = demacia.getResponse(input);
         dialogContainer.getChildren().addAll(
