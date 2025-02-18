@@ -75,7 +75,7 @@ public class TaskListTest {
             taskList.deleteTask(0);
         }
 
-        assert(taskList.listTasks().equals("1.[D][X] do homework (by: 2025-05-20 12:23)"));
+        assert(taskList.listTasks().equals("1. [D][X] do homework (by: 2025-05-20 12:23)"));
     }
 
     @Test
