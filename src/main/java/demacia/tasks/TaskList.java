@@ -12,7 +12,7 @@ import demacia.storage.Saveable;
 public class TaskList implements Saveable {
     private static final int MAX_TASKS = 100;
     private static final String NO_TASK_MESSAGE = "No tasks found";
-    private static final String NOT_EXIST_MESSAGE = "Task does not exist in the listd";
+    private static final String NOT_EXIST_MESSAGE = "Task does not exist in the list";
     private final ArrayList<Task> tasks;
     private int taskIndex;
 
