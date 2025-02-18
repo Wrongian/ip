@@ -232,12 +232,9 @@ public class TaskList implements Saveable {
     public TaskList findTaskByString(String searchString) throws IndexOutOfBoundsException {
         TaskList taskList = new TaskList();
 
-        for (int i = 0; i < this.taskIndex; i++) {
-            Task task = this.tasks.get(i);
-            if (task.nameContainsString(searchString)) {
-                taskList.addToList(task);
-            }
-        }
+        this.tasks.stream()
+                .filter(task -> task.nameContainsString(searchString))
+                .forEach(taskList::addToList);
 
         return taskList;
     }
