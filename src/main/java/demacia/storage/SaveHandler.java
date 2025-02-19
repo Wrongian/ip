@@ -2,7 +2,6 @@ package demacia.storage;
 
 import demacia.exceptions.CannotSaveException;
 import demacia.exceptions.InvalidSaveException;
-import demacia.tasks.TaskList;
 
 /**
  * Class to handle saving data to files.

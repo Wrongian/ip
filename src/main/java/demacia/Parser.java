@@ -142,7 +142,7 @@ public class Parser {
      */
     private static boolean checkForReserved(String msg) {
         for (int i = 0; i < msg.length(); i++) {
-            char character  = msg.charAt(i);
+            char character = msg.charAt(i);
             if (Parser.RESERVED_CHARACTERS.contains(String.valueOf(character))) {
                 return true;
             }
