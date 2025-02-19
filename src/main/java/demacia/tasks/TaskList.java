@@ -96,7 +96,7 @@ public class TaskList implements Saveable {
      * @throws IndexOutOfBoundsException If the Task designated by the index does not exist in the TaskList.
      */
     public void markTask(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
+        if (index < 0 || index >= this.taskIndex) {
             throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
 
@@ -105,11 +105,12 @@ public class TaskList implements Saveable {
 
     /**
      * Unmarks a task in the TaskList.
+     *
      * @param index The index in the TaskList to unmark.
      * @throws IndexOutOfBoundsException If the Task designated by the index does not exist in the TaskList.
      */
     public void unmarkTask(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
+        if (index < 0 || index >= this.taskIndex) {
             throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
 
@@ -118,12 +119,13 @@ public class TaskList implements Saveable {
 
     /**
      * Returns the String representation of a Task in the TaskList.
+     *
      * @param index The index of the TaskList.
      * @return The String representation of the designated Task.
      * @throws IndexOutOfBoundsException If the Task designated by the index does not exist in the TaskList.
      */
     public String getTaskString(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
+        if (index < 0 || index >= this.taskIndex) {
             throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
 
@@ -159,11 +161,12 @@ public class TaskList implements Saveable {
 
     /**
      * Deletes a task in the TaskList.
+     *
      * @param index The index of the Task in the TaskList to delete.
      * @throws IndexOutOfBoundsException If the Task designated by the index does not exist in the TaskList.
      */
     public void deleteTask(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index + 1 > TaskList.MAX_TASKS) {
+        if (index < 0 || index >= this.taskIndex) {
             throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
 
@@ -175,6 +178,23 @@ public class TaskList implements Saveable {
         } catch (IndexOutOfBoundsException e) {
             throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
         }
+    }
+
+    public String getTaskNote(int index) {
+        if (index < 0 || index >= this.taskIndex) {
+            throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
+        }
+
+        return this.tasks.get(index).getNote();
+    }
+
+    public void setTaskNote(int index, String note) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.taskIndex) {
+            throw new ArrayIndexOutOfBoundsException(TaskList.NOT_EXIST_MESSAGE);
+        }
+
+        this.tasks.get(index).setNote(note);
+
     }
 
     /**
@@ -202,6 +222,7 @@ public class TaskList implements Saveable {
 
     /**
      * Loads the tasks into the TaskList using a serialised save String.
+     *
      * @param saveString The save String to load.
      * @return The TaskList from the String.
      * @throws InvalidSaveException If the save format is invalid.

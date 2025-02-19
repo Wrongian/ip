@@ -40,6 +40,21 @@ public class Event extends Task {
     }
 
     /**
+     * Constructor to create an Event object.
+     *
+     * @param name Name as a String for the Event object.
+     * @param isMarked Boolean for whether the task is already done.
+     * @param from LocalDateTime object to represent when the event starts.
+     * @param to LocalDateTime object to represent when the event ends.
+     * @param note String of note.
+     */
+    public Event(String name, boolean isMarked, LocalDateTime from, LocalDateTime to, String note) {
+        super(name, isMarked, note);
+        this.from = from;
+        this.to = to;
+    }
+
+    /**
      * Returns the String representation of the Event object.
      *
      * @return String representation of the Event object.
@@ -72,12 +87,13 @@ public class Event extends Task {
      * @param name The name of the Event object.
      * @param isMarked If the Event object is marked.
      * @param saveMap The arguments of the Event object as a HashMap.
+     * @param note The String of the note.
      * @return The created Event object.
      * @throws InvalidSaveException If the save file representations is wrong.
      */
     public static Event load(
             String name, boolean isMarked,
-            HashMap<String, String> saveMap) throws InvalidSaveException {
+            HashMap<String, String> saveMap, String note) throws InvalidSaveException {
 
         if (!saveMap.containsKey("from")) {
             throw new InvalidSaveException("Key 'from' does not exist when it is required");
@@ -93,7 +109,7 @@ public class Event extends Task {
             LocalDateTime fromDateTime = Utils.parseDateTime(from);
             LocalDateTime toDateTime = Utils.parseDateTime(to);
 
-            return new Event(name, isMarked, fromDateTime, toDateTime);
+            return new Event(name, isMarked, fromDateTime, toDateTime, note);
         } catch (DateTimeParseException e) {
             throw new InvalidSaveException("Datetime is formatted wrongly");
         }

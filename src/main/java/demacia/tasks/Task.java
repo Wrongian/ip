@@ -12,14 +12,14 @@ public abstract class Task implements Saveable {
 
     private final String name;
     private boolean isDone;
+    private String note;
 
     /**
      * Constructor to create a default task.
      * @param name The name of the task as a String.
      */
     public Task(String name) {
-        this.name = name;
-        this.isDone = false;
+        this(name, false);
     }
 
     /**
@@ -29,8 +29,20 @@ public abstract class Task implements Saveable {
      * @param isDone Boolean for whether the task is already done.
      */
     public Task(String name, boolean isDone) {
-        this(name);
+        this(name, isDone, "");
+    }
+
+    /**
+     * Constructor to create a default task.
+     *
+     * @param name The name of the task as a String.
+     * @param isDone Boolean for whether the task is already done.
+     * @param note String for the note.
+     */
+    public Task(String name, boolean isDone, String note) {
+        this.name = name;
         this.isDone = isDone;
+        this.note = note;
     }
 
     /**
@@ -75,6 +87,24 @@ public abstract class Task implements Saveable {
     }
 
     /**
+     * Setter for the note String.
+     *
+     * @param note The note String.
+     */
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    /**
+     * Getting for the note String
+     *
+     * @return The note string.
+     */
+    public String getNote() {
+        return this.note;
+    }
+
+    /**
      * Returns the String representation of the task.
      *
      * @return The String representation of the task.
@@ -100,7 +130,14 @@ public abstract class Task implements Saveable {
      */
     @Override
     public String save() {
-        return "name:" + this.name + ",isMarked:" + this.getIsDone();
+        if (!this.note.isEmpty()) {
+            return "name:" + this.name + ",isMarked:"
+                    + this.getIsDone() + ",note:" + this.note;
+        } else {
+            return "name:" + this.name + ",isMarked:"
+                    + this.getIsDone();
+        }
+
     }
 
     /**
@@ -128,6 +165,14 @@ public abstract class Task implements Saveable {
 
         String name = saveMap.get("name");
 
+        String note;
+        if (saveMap.containsKey("note")) {
+            note = saveMap.get("note");
+        } else {
+            note = "";
+        }
+
+
         // assume if the key "isMarked" not in the saveMap its false
         boolean isMarked = false;
         // default false if not true
@@ -139,11 +184,11 @@ public abstract class Task implements Saveable {
 
         switch (type) {
         case "T":
-            return Todo.load(name, isMarked);
+            return Todo.load(name, isMarked, note);
         case "D":
-            return Deadline.load(name, isMarked, saveMap);
+            return Deadline.load(name, isMarked, saveMap, note);
         case "E":
-            return Event.load(name, isMarked, saveMap);
+            return Event.load(name, isMarked, saveMap, note);
         default:
             throw new InvalidSaveException("Save file format is wrong");
         }

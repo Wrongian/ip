@@ -36,6 +36,19 @@ public class Deadline extends Task {
     }
 
     /**
+     * Constructor for a Deadline object.
+     *
+     * @param name Name as a String for the Deadline object.
+     * @param isMarked Boolean for whether the task is already done.
+     * @param by LocalDateTime object to describe the Deadline.
+     * @param note String of note.
+     */
+    public Deadline(String name, boolean isMarked, LocalDateTime by, String note) {
+        super(name, isMarked, note);
+        this.by = by;
+    }
+
+    /**
      * The String representation of the Deadline object.
      *
      * @return The String representation.
@@ -65,12 +78,13 @@ public class Deadline extends Task {
      * @param name The name of the Deadline object.
      * @param isMarked If the Deadline object is marked.
      * @param saveMap The arguments of the Deadline object as a HashMap.
+     * @param note String of note of Deadline object.
      * @return The created Deadline object.
      * @throws InvalidSaveException If the save file representations is wrong.
      */
     public static Deadline load(
             String name, boolean isMarked,
-            HashMap<String, String> saveMap) throws InvalidSaveException {
+            HashMap<String, String> saveMap, String note) throws InvalidSaveException {
 
         if (!saveMap.containsKey("by")) {
             throw new InvalidSaveException("Key 'by' does not exist when it is required");
@@ -78,7 +92,7 @@ public class Deadline extends Task {
         String by = saveMap.get("by");
         try {
             LocalDateTime byDateTime = Utils.parseDateTime(by);
-            return new Deadline(name, isMarked, byDateTime);
+            return new Deadline(name, isMarked, byDateTime, note);
         } catch (DateTimeParseException e) {
             throw new InvalidSaveException("Datetime is formatted wrongly");
         }
