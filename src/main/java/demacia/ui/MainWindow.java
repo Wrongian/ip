@@ -5,10 +5,13 @@ import demacia.DemaciaResponse;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
@@ -59,10 +62,14 @@ public class MainWindow extends AnchorPane {
 
         String input = userInput.getText();
         DemaciaResponse response = demacia.getResponse(input);
+        DialogBox userDialog = DialogBox.getUserDialog(input, this.userImage);
+        DialogBox demaciaDialog = DialogBox.getDemaciaDialog(response.getResponse(), this.demaciaImage);
+        dialogContainer.setPrefHeight(Region.USE_COMPUTED_SIZE);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, this.userImage),
-                DialogBox.getDemaciaDialog(response.getResponse(), this.demaciaImage)
+                userDialog,
+                demaciaDialog
         );
+        this.scrollPane.vvalueProperty().bind(this.dialogContainer.heightProperty());
         userInput.clear();
         if (response.getIsExit()) {
             // close program
