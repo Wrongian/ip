@@ -14,12 +14,15 @@ import demacia.commands.MarkCommand;
 import demacia.commands.SetNoteCommand;
 import demacia.commands.TodoCommand;
 import demacia.commands.UnmarkCommand;
+import demacia.exceptions.CommandException;
 import demacia.exceptions.IncorrectArgumentFormatException;
 
 /**
  * Class to encapsulate the methods to parse commands.
  */
 public class Parser {
+
+    private static final String RESERVED_CHARACTERS = ",:";
 
     /**
      * Parses the String into a Command object.
@@ -28,7 +31,14 @@ public class Parser {
      * @return The parsed Command object.
      * @throws IncorrectArgumentFormatException If the String cannot be parsed into a Command.
      */
-    public static Command parseCommand(String msg) throws IncorrectArgumentFormatException {
+    public static Command parseCommand(String msg)
+            throws IncorrectArgumentFormatException, CommandException {
+
+        // check for reserved characters
+        if (Parser.checkForReserved(msg)) {
+            throw new CommandException("Reserved characters ',' or ':' should not be used");
+        }
+
         // hashmap rest of the arguments
         String[] args = msg.split(" /");
 
@@ -122,5 +132,21 @@ public class Parser {
             firstArg = nameBuilder.toString();
         }
         return firstArg;
+    }
+
+    /**
+     * Checks for reserved characters in the String.
+     *
+     * @param msg The String to check for reserved characters.
+     * @return The boolean value for whether the String had reserved characters.
+     */
+    private static boolean checkForReserved(String msg) {
+        for (int i = 0; i < msg.length(); i++) {
+            char character  = msg.charAt(i);
+            if (Parser.RESERVED_CHARACTERS.contains(String.valueOf(character))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
