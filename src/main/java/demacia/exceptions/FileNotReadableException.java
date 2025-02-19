@@ -3,7 +3,7 @@ package demacia.exceptions;
 /**
  * Class for exception relating to the file not having read permissions.
  */
-public class FileNotReadableException extends DukeException {
+public class FileNotReadableException extends DemaciaException {
 
     /**
      * Constructor for the FileNotReadableException.

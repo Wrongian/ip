@@ -3,7 +3,7 @@ package demacia.exceptions;
 /**
  * Class for the exception relating to having a save file with the wrong format.
  */
-public class InvalidSaveException extends DukeException {
+public class InvalidSaveException extends DemaciaException {
 
     /**
      * Constructor to create an InvalidSaveException.

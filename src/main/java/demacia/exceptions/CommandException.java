@@ -3,7 +3,7 @@ package demacia.exceptions;
 /**
  * Class for exceptions relating to commands failing.
  */
-public class CommandException extends DukeException {
+public class CommandException extends DemaciaException {
 
     /**
      * Constructor for the exception.

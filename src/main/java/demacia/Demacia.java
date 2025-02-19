@@ -1,7 +1,7 @@
 package demacia;
 
 import demacia.commands.Command;
-import demacia.exceptions.DukeException;
+import demacia.exceptions.DemaciaException;
 import demacia.exceptions.InvalidSaveException;
 import demacia.storage.SaveData;
 import demacia.storage.SaveHandler;
@@ -57,7 +57,7 @@ public class Demacia {
             // execute command
             cmd.execute(this.taskList, this.terminal);
             isExit = cmd.getIsExit();
-        } catch (DukeException e) {
+        } catch (DemaciaException e) {
             this.terminal.buffer(e.getMessage());
         } finally {
             return new DemaciaResponse(this.terminal.getOutput(), isExit);

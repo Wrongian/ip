@@ -50,8 +50,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Creates two dialog boxes, one for the user input and one for the chatbot. Clears the dialogue box
+     * afterwards. It closes the program if needed.
      */
     @FXML
     private void handleUserInput() {
