@@ -8,8 +8,10 @@ import demacia.commands.DeadlineCommand;
 import demacia.commands.DeleteCommand;
 import demacia.commands.EventCommand;
 import demacia.commands.FindCommand;
+import demacia.commands.GetNoteCommand;
 import demacia.commands.ListCommand;
 import demacia.commands.MarkCommand;
+import demacia.commands.SetNoteCommand;
 import demacia.commands.TodoCommand;
 import demacia.commands.UnmarkCommand;
 import demacia.exceptions.IncorrectArgumentFormatException;
@@ -58,6 +60,10 @@ public class Parser {
             return EventCommand.makeCommand(firstArg, args, cmds);
         case "find":
             return FindCommand.makeCommand(firstArg, args, cmds);
+        case "getnote":
+            return GetNoteCommand.makeCommand(firstArg, args, cmds);
+        case "setnote":
+            return SetNoteCommand.makeCommand(firstArg, args, cmds);
         default:
             throw new IncorrectArgumentFormatException("Command does not exist");
         }

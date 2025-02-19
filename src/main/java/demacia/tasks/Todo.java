@@ -25,6 +25,17 @@ public class Todo extends Task {
     }
 
     /**
+     * Constructor to create a Todo object.
+     *
+     * @param name The name of the Todo to create.
+     * @param isMarked Boolean if the Todo is Done.
+     * @param note String of note.
+     */
+    public Todo(String name, boolean isMarked, String note) {
+        super(name, isMarked, note);
+    }
+
+    /**
      * Returns String representation of the Todo object.
      *
      * @return String representation of the Todo object.
@@ -50,9 +61,10 @@ public class Todo extends Task {
      *
      * @param name The name of the Todo object.
      * @param isMarked If the Todo object is marked.
+     * @param note String of note of Todo object.
      * @return The created Todo object.
      */
-    public static Todo load(String name, boolean isMarked) {
-        return new Todo(name, isMarked);
+    public static Todo load(String name, boolean isMarked, String note) {
+        return new Todo(name, isMarked, note);
     }
 }
