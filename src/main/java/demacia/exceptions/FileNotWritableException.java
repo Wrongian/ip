@@ -3,7 +3,7 @@ package demacia.exceptions;
 /**
  * Class for exception relating to the file not having write permissions.
  */
-public class FileNotWritableException extends DukeException {
+public class FileNotWritableException extends DemaciaException {
 
     /**
      * Constructor for the FileNotWritableException.

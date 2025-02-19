@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
@@ -49,8 +50,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Creates two dialog boxes, one for the user input and one for the chatbot. Clears the dialogue box
+     * afterwards. It closes the program if needed.
      */
     @FXML
     private void handleUserInput() {
@@ -59,10 +60,14 @@ public class MainWindow extends AnchorPane {
 
         String input = userInput.getText();
         DemaciaResponse response = demacia.getResponse(input);
+        DialogBox userDialog = DialogBox.getUserDialog(input, this.userImage);
+        DialogBox demaciaDialog = DialogBox.getDemaciaDialog(response.getResponse(), this.demaciaImage);
+        dialogContainer.setPrefHeight(Region.USE_COMPUTED_SIZE);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, this.userImage),
-                DialogBox.getDemaciaDialog(response.getResponse(), this.demaciaImage)
+                userDialog,
+                demaciaDialog
         );
+        this.scrollPane.vvalueProperty().bind(this.dialogContainer.heightProperty());
         userInput.clear();
         if (response.getIsExit()) {
             // close program

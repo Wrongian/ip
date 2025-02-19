@@ -1,5 +1,7 @@
 package demacia.commands;
 
+import demacia.exceptions.CannotSaveException;
+import demacia.exceptions.CommandException;
 import demacia.storage.SaveData;
 import demacia.storage.SaveHandler;
 import demacia.tasks.TaskList;
@@ -39,10 +41,11 @@ public abstract class Command {
      *
      * @param taskList the TaskList used to execute the Command.
      * @param terminal the Terminal used to execute the Command.
+     * @throws CommandException if the command fails.
      */
-    public abstract void execute(TaskList taskList, Terminal terminal);
+    public abstract void execute(TaskList taskList, Terminal terminal) throws CommandException;
 
-    public void save(SaveData saveData) {
+    public void save(SaveData saveData) throws CannotSaveException {
         SaveHandler.save(saveData);
     }
 

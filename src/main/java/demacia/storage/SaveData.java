@@ -23,7 +23,7 @@ public class SaveData implements Saveable {
      *
      * @param saveString The serialised save String to process to the SaveData.
      */
-    public SaveData(String saveString) {
+    public SaveData(String saveString) throws InvalidSaveException {
         this.load(saveString);
     }
 
@@ -41,14 +41,12 @@ public class SaveData implements Saveable {
      *
      * @param saveString The save data as a String.
      */
-    public void load(String saveString) {
+    public void load(String saveString) throws InvalidSaveException {
         try {
             this.taskList = TaskList.load(saveString);
         } catch (InvalidSaveException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Using blank list");
-
             this.taskList = new TaskList();
+            throw e;
         }
     }
 

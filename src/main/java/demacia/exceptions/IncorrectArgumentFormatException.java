@@ -4,7 +4,7 @@ package demacia.exceptions;
  * Class for the exception relating to having the wrong format for the arguments for
  * the command such that the chatbot cannot parse it.
  */
-public class IncorrectArgumentFormatException extends DukeException {
+public class IncorrectArgumentFormatException extends DemaciaException {
 
     /**
      * Constructor for the IncorrectArgumentFormatException.

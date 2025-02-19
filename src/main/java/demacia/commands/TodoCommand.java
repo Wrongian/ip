@@ -2,6 +2,8 @@ package demacia.commands;
 
 import java.util.HashMap;
 
+import demacia.exceptions.CannotSaveException;
+import demacia.exceptions.CommandException;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
@@ -29,9 +31,10 @@ public class TodoCommand extends Command {
      *
      * @param taskList the TaskList used to execute the Command.
      * @param terminal the Terminal used to execute the Command.
+     * @throws CommandException if the command fails.
      */
     @Override
-    public void execute(TaskList taskList, Terminal terminal) {
+    public void execute(TaskList taskList, Terminal terminal) throws CommandException {
         try {
             int index = taskList.addTodo(this.name);
 
@@ -45,10 +48,14 @@ public class TodoCommand extends Command {
                 terminal.buffer("Now you have " + String.valueOf(index + 1) + " tasks in the list");
             }
 
-            this.save(new SaveData(taskList));
+            try {
+                this.save(new SaveData(taskList));
+            } catch (CannotSaveException e) {
+                terminal.buffer(e.getMessage());
+            }
+
         } catch (IndexOutOfBoundsException e) {
-            // todo: change this to command error
-            terminal.buffer(e.getMessage());
+            throw new CommandException(e.getMessage());
         }
     }
 

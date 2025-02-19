@@ -2,6 +2,8 @@ package demacia.commands;
 
 import java.util.HashMap;
 
+import demacia.exceptions.CannotSaveException;
+import demacia.exceptions.CommandException;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
@@ -31,17 +33,22 @@ public class SetNoteCommand extends Command {
      *
      * @param taskList the TaskList used to execute the Command.
      * @param terminal the Terminal used to execute the Command.
+     * @throws CommandException if the command fails.
      */
     @Override
-    public void execute(TaskList taskList, Terminal terminal) {
+    public void execute(TaskList taskList, Terminal terminal) throws CommandException {
         try {
             taskList.setTaskNote(this.index, this.note);
 
             terminal.buffer("Successfully set the note");
         } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(e.getMessage());
+        }
+        try {
+            this.save(new SaveData(taskList));
+        } catch (CannotSaveException e) {
             terminal.buffer(e.getMessage());
         }
-        this.save(new SaveData(taskList));
     }
 
     /**

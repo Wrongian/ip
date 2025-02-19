@@ -1,7 +1,8 @@
 package demacia;
 
 import demacia.commands.Command;
-import demacia.exceptions.IncorrectArgumentFormatException;
+import demacia.exceptions.DemaciaException;
+import demacia.exceptions.InvalidSaveException;
 import demacia.storage.SaveData;
 import demacia.storage.SaveHandler;
 import demacia.tasks.TaskList;
@@ -21,7 +22,13 @@ public class Demacia {
         this.terminal = new Terminal();
         this.taskList = new TaskList();
 
-        SaveData saveData = SaveHandler.load();
+        SaveData saveData;
+        try {
+            saveData = SaveHandler.load();
+        } catch (InvalidSaveException e) {
+            saveData = new SaveData(new TaskList());
+            terminal.buffer("Cannot load save files\nUsing default values\n");
+        }
 
         this.taskList = saveData.getTaskList();
     }
@@ -50,7 +57,7 @@ public class Demacia {
             // execute command
             cmd.execute(this.taskList, this.terminal);
             isExit = cmd.getIsExit();
-        } catch (IncorrectArgumentFormatException e) {
+        } catch (DemaciaException e) {
             this.terminal.buffer(e.getMessage());
         } finally {
             return new DemaciaResponse(this.terminal.getOutput(), isExit);

@@ -2,6 +2,8 @@ package demacia.commands;
 
 import java.util.HashMap;
 
+import demacia.exceptions.CannotSaveException;
+import demacia.exceptions.CommandException;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
 import demacia.tasks.TaskList;
@@ -29,9 +31,10 @@ public class MarkCommand extends Command {
      *
      * @param taskList the TaskList used to execute the Command.
      * @param terminal the Terminal used to execute the Command.
+     * @throws CommandException if the command fails.
      */
     @Override
-    public void execute(TaskList taskList, Terminal terminal) {
+    public void execute(TaskList taskList, Terminal terminal) throws CommandException {
         // get task
         try {
             taskList.markTask(this.index);
@@ -39,9 +42,14 @@ public class MarkCommand extends Command {
             terminal.buffer("Marked this task as done:");
             terminal.buffer(taskList.getTaskString(this.index));
         } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(e.getMessage());
+        }
+
+        try {
+            this.save(new SaveData(taskList));
+        } catch (CannotSaveException e) {
             terminal.buffer(e.getMessage());
         }
-        this.save(new SaveData(taskList));
     }
 
     /**
