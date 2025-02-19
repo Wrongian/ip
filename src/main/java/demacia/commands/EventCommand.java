@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 
+import demacia.exceptions.CannotSaveException;
 import demacia.exceptions.CommandException;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
@@ -56,7 +57,11 @@ public class EventCommand extends Command {
                 terminal.buffer("Now you have " + String.valueOf(index + 1) + " tasks in the list");
             }
 
-            this.save(new SaveData(taskList));
+            try {
+                this.save(new SaveData(taskList));
+            } catch (CannotSaveException e) {
+                terminal.buffer(e.getMessage());
+            }
 
         } catch (IndexOutOfBoundsException e) {
             throw new CommandException(e.getMessage());

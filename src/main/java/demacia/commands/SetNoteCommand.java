@@ -2,6 +2,7 @@ package demacia.commands;
 
 import java.util.HashMap;
 
+import demacia.exceptions.CannotSaveException;
 import demacia.exceptions.CommandException;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.storage.SaveData;
@@ -43,7 +44,11 @@ public class SetNoteCommand extends Command {
         } catch (IndexOutOfBoundsException e) {
             throw new CommandException(e.getMessage());
         }
-        this.save(new SaveData(taskList));
+        try {
+            this.save(new SaveData(taskList));
+        } catch (CannotSaveException e) {
+            terminal.buffer(e.getMessage());
+        }
     }
 
     /**
