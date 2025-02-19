@@ -1,7 +1,7 @@
 package demacia;
 
 import demacia.commands.Command;
-import demacia.exceptions.IncorrectArgumentFormatException;
+import demacia.exceptions.DukeException;
 import demacia.storage.SaveData;
 import demacia.storage.SaveHandler;
 import demacia.tasks.TaskList;
@@ -50,7 +50,7 @@ public class Demacia {
             // execute command
             cmd.execute(this.taskList, this.terminal);
             isExit = cmd.getIsExit();
-        } catch (IncorrectArgumentFormatException e) {
+        } catch (DukeException e) {
             this.terminal.buffer(e.getMessage());
         } finally {
             return new DemaciaResponse(this.terminal.getOutput(), isExit);

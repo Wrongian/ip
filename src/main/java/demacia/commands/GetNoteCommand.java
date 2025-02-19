@@ -2,6 +2,7 @@ package demacia.commands;
 
 import java.util.HashMap;
 
+import demacia.exceptions.CommandException;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
@@ -28,15 +29,16 @@ public class GetNoteCommand extends Command {
      *
      * @param taskList the TaskList used to execute the Command.
      * @param terminal the Terminal used to execute the Command.
+     * @throws CommandException if the command fails.
      */
     @Override
-    public void execute(TaskList taskList, Terminal terminal) {
+    public void execute(TaskList taskList, Terminal terminal) throws CommandException {
         try {
             taskList.getTaskNote(this.index);
 
             terminal.buffer(taskList.getTaskNote(this.index));
         } catch (IndexOutOfBoundsException e) {
-            terminal.buffer(e.getMessage());
+            throw new CommandException(e.getMessage());
         }
     }
 

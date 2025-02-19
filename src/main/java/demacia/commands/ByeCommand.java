@@ -2,6 +2,7 @@ package demacia.commands;
 
 import java.util.HashMap;
 
+import demacia.exceptions.CommandException;
 import demacia.exceptions.IncorrectArgumentFormatException;
 import demacia.tasks.TaskList;
 import demacia.ui.Terminal;
@@ -17,9 +18,10 @@ public class ByeCommand extends Command {
      *
      * @param taskList the TaskList to be used to execute the command.
      * @param terminal the Terminal to be used to execute the command.
+     * @throws CommandException if the command fails.
      */
     @Override
-    public void execute(TaskList taskList, Terminal terminal) {
+    public void execute(TaskList taskList, Terminal terminal) throws CommandException {
         terminal.buffer("Buybye, see ya later...");
         this.exit();
     }
