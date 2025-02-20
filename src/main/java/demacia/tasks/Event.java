@@ -77,7 +77,7 @@ public class Event extends Task {
         return super.save()
                 + ",from:" + Utils.formatDateTime(this.from)
                 + ",to:" + Utils.formatDateTime(this.to)
-                + ",type:";
+                + ",type:E";
     }
 
     /**
