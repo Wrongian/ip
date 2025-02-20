@@ -27,7 +27,6 @@ public class Demacia {
             saveData = SaveHandler.load();
         } catch (InvalidSaveException e) {
             saveData = new SaveData(new TaskList());
-            terminal.buffer("Cannot load save files\nUsing default values\n");
         }
 
         this.taskList = saveData.getTaskList();
