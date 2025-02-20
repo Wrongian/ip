@@ -77,7 +77,7 @@ public class DeadlineCommand extends Command {
             String firstArg, String[] args, HashMap<String, String> cmds) throws IncorrectArgumentFormatException {
         if (firstArg.isEmpty() || args.length != 2 || !cmds.containsKey("by")) {
             throw new IncorrectArgumentFormatException(
-                    "Usage: \ntodo <task name> /by <deadline>");
+                    "Usage: \ndeadline <task name> /by <deadline>");
         }
         try {
             LocalDateTime byDateTime = Utils.parseDateTime(cmds.get("by"));
