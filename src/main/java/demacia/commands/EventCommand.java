@@ -82,7 +82,7 @@ public class EventCommand extends Command {
         if (firstArg.isEmpty() || args.length != 3
                 || !cmds.containsKey("from") || !cmds.containsKey("to")) {
             throw new IncorrectArgumentFormatException(
-                    "Usage: \ntodo <task name> /from <from> /to <to>");
+                    "Usage: \nevent <task name> /from <from> /to <to>");
         }
         try {
             LocalDateTime fromDateTime = Utils.parseDateTime(cmds.get("from"));
